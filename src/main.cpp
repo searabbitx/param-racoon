@@ -4,6 +4,7 @@
 #include <string>
 
 #include "config/config.h"
+#include "log/banner.h"
 #include "task/param_finding_task.h"
 #include "wordlist/wordlist.h"
 
@@ -12,26 +13,7 @@ int main(int argc, char* argv[]) {
   const Config config{CreateConfigFromCliArgs(argc, argv)};
   Wordlist wordlist{config.WordlistPath()};
 
-  std::cout << "🦝 Hello.\n";
-  std::cout << "🦝🦝🦝🦝\n";
-  std::cout << "🦝 url: " << config.ATarget().Url() << '\n';
-  std::cout << "🦝 method: " << config.ATarget().Method() << '\n';
-  std::cout << "🦝 wordlist: " << config.WordlistPath() << '\n';
-  std::cout << "🦝 words: " << wordlist.Total() << '\n';
-  std::cout << "🦝 threads: " << config.Threads() << '\n';
-  if (!config.ATarget().Headers().empty()) {
-    std::cout << "🦝 headers: ";
-    for (const auto& header : config.ATarget().Headers()) {
-      std::cout << header << "\n            ";
-    }
-  }
-  if (!config.ATarget().Cookies().empty()) {
-    std::cout << "🦝 cookies: " << config.ATarget().Cookies() << '\n';
-  }
-  if (!config.Match().empty()) {
-    std::cout << "🦝 match: " << config.Match() << '\n';
-  }
-  std::cout << '\n';
+  logging::printBanner(config, wordlist);
 
   ParamFindingTask task{config, wordlist};
 
