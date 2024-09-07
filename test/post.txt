@@ -1,9 +1,9 @@
-POST /post.php HTTP/1.1
+POST /post_with_required_params.php HTTP/1.1
 Host: localhost:8888
 User-Agent: YourMom
 Accept: */*
-Content-Length: 15
+Content-Length: 30
 Content-Type: application/x-www-form-urlencoded
 Connection: close
 
-requd=testtestx
+required=foo&otherrequired=bar

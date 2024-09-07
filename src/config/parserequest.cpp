@@ -2,9 +2,17 @@
 
 #include <filesystem>
 #include <fstream>
+#include <memory>
 #include <string>
 
 namespace fs = std::filesystem;
+
+static auto FullLength(std::ifstream& is) {
+  is.seekg(0, std::ifstream::end);
+  auto length{is.tellg()};
+  is.seekg(0, std::ifstream::beg);
+  return length;
+}
 
 std::string ParseRequest(const std::string& request_file_path, Config& config) {
   if (!fs::exists(request_file_path)) {
@@ -12,6 +20,7 @@ std::string ParseRequest(const std::string& request_file_path, Config& config) {
   }
 
   std::ifstream request_stream{request_file_path};
+  auto full_len{FullLength(request_stream)};
 
   std::string request_line{};
   std::getline(request_stream, request_line);
@@ -27,6 +36,12 @@ std::string ParseRequest(const std::string& request_file_path, Config& config) {
   while (!header.empty()) {
     config.target_.headers_.push_back(header);
     std::getline(request_stream, header);
+  }
+  auto remaining{full_len - request_stream.tellg()};
+  if (remaining) {
+    auto data{std::make_unique<char[]>(remaining)};
+    request_stream.read(data.get(), remaining);
+    config.target_.data_ = data.get();
   }
 
   return "";

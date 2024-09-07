@@ -61,7 +61,7 @@ run-tests: $(BUILD_DIR)/$(TARGET_EXEC)
 	@echo "\n---------- Running headers.php test with request from file ----------\n"
 	./$(BUILD_DIR)/$(TARGET_EXEC) -q -w test/wordlist/test.txt -r test/get_header.txt 'http://localhost:8888/headers.php'
 	@echo "\n---------- Running post.php test with request from file ----------\n"
-	./$(BUILD_DIR)/$(TARGET_EXEC) -q -w test/wordlist/test.txt -r test/post.txt 'http://localhost:8888/post.php'
+	./$(BUILD_DIR)/$(TARGET_EXEC) -q -w test/wordlist/test.txt -r test/post.txt 'http://localhost:8888/post_with_required_params.php'
 
 # Run
 .PHONY: run
