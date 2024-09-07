@@ -2,7 +2,6 @@
 
 #include <boost/asio.hpp>
 #include <boost/thread.hpp>
-#include <iostream>
 #include <mutex>
 #include <string>
 #include <thread>
