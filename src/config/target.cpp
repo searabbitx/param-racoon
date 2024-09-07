@@ -9,3 +9,4 @@ std::string Target::Method() const { return method_; }
 std::string Target::Data() const { return data_; }
 std::string Target::Agent() const { return agent_; }
 std::string Target::Proxy() const { return proxy_; }
+std::string Target::AbsoluteUri() const { return absolute_uri_; }

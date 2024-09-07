@@ -56,9 +56,10 @@ Response HttpClient::MakeRequest(
     const string_map_t& body_params, const string_vec_t& headers,
     const std::string& agent, const std::string& cookies,
     const std::string& method, const std::string& data,
-    const std::string& proxy) {
+    const std::string& proxy, const std::string& absolute_uri) {
   curl_easy_setopt(curl_, CURLOPT_CUSTOMREQUEST, method.c_str());
-  curl_easy_setopt(curl_, CURLOPT_URL, CreateFullUrl(host, query).c_str());
+  curl_easy_setopt(curl_, CURLOPT_URL,
+                   CreateFullUrl(host, absolute_uri, query).c_str());
   if (!proxy.empty()) {
     curl_easy_setopt(curl_, CURLOPT_PROXY, proxy.c_str());
   }
@@ -86,9 +87,14 @@ Response HttpClient::MakeRequest(
 }
 
 std::string HttpClient::CreateFullUrl(const std::string& host,
+                                      const std::string& absolute_uri,
                                       const string_map_t& query) {
   CURLU* url{curl_url()};
   curl_url_set(url, CURLUPART_URL, host.c_str(), 0);
+
+  if (!absolute_uri.empty()) {
+    curl_url_set(url, CURLUPART_PATH, absolute_uri.c_str(), 0);
+  }
 
   std::string query_entry;
   for (const auto& [key, value] : query) {

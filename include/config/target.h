@@ -21,6 +21,7 @@ class Target {
   std::string data_{};
   std::string agent_{kDefaultAgent};
   std::string proxy_{};
+  std::string absolute_uri_{};
   Target() = default;
 
  public:
@@ -31,6 +32,7 @@ class Target {
   [[nodiscard]] std::string Data() const;
   [[nodiscard]] std::string Agent() const;
   [[nodiscard]] std::string Proxy() const;
+  [[nodiscard]] std::string AbsoluteUri() const;
   friend Config CreateConfigFromCliArgs(int argc, char** argv);
   friend void Validate(const Config& config,
                        const po::options_description& odesc);

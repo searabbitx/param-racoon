@@ -25,16 +25,15 @@ class HttpClient {
                        const string_map_t& params = string_map_t());
 
  private:
-  Response MakeRequest(const std::string& host,
-                       const string_map_t& query = string_map_t(),
-                       const string_map_t& body_params = string_map_t(),
-                       const string_vec_t& headers = string_vec_t(),
-                       const std::string& agent = "",
-                       const std::string& cookies = "",
-                       const std::string& method = "GET",
-                       const std::string& data = "",
-                       const std::string& proxy = "");
+  Response MakeRequest(
+      const std::string& host, const string_map_t& query = string_map_t(),
+      const string_map_t& body_params = string_map_t(),
+      const string_vec_t& headers = string_vec_t(),
+      const std::string& agent = "", const std::string& cookies = "",
+      const std::string& method = "GET", const std::string& data = "",
+      const std::string& proxy = "", const std::string& absolute_uri = "");
   static std::string CreateFullUrl(const std::string& host,
+                                   const std::string& absolute_uri,
                                    const string_map_t& query);
   void SetHeaders(curl_slist* list, const string_vec_t& headers);
   void SetCookies(const std::string& cookies);

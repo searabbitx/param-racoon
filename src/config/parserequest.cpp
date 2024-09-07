@@ -15,8 +15,12 @@ std::string ParseRequest(const std::string& request_file_path, Config& config) {
 
   std::string request_line{};
   std::getline(request_stream, request_line);
-  auto first_space{request_line.find_first_of(' ')};
-  config.target_.method_ = request_line.substr(0, first_space);
+  auto first_space{request_line.find(' ')};
+  auto second_space{request_line.find(' ', first_space + 1)};
+  config.target_.method_ =
+      std::string(&request_line[0], &request_line[first_space]);
+  config.target_.absolute_uri_ =
+      std::string(&request_line[first_space + 1], &request_line[second_space]);
 
   std::string header{};
   std::getline(request_stream, header);
