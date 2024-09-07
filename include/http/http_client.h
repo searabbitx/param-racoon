@@ -24,6 +24,6 @@ class HttpClient {
  private:
   static std::string CreateFullUrl(const std::string& host,
                                    const string_map_t& query);
-  Response CreateResponse();
   void PerformRequest();
+  Response CreateResponse(std::string content);
 };

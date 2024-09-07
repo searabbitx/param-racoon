@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-#include "http/http_client.h"
+#include "task/probe.h"
 #include "wordlist/wordlist.h"
 
 using handler_t = std::function<void()>;
@@ -15,7 +15,7 @@ class ParamFindingTask {
   const std::string url_;
   Wordlist& wordlist_;
   short threads_;
-  Response probe_;
+  Probe probe_;
   boost::asio::io_service io_;
   boost::asio::io_service::work work_;
   std::vector<std::string> results_{};

@@ -7,8 +7,8 @@
 #include <thread>
 #include <vector>
 
-#include "http/http_client.h"
 #include "task/param_test.h"
+#include "task/probe.h"
 
 std::mutex pending_tasks_mtx;
 
@@ -17,7 +17,7 @@ ParamFindingTask::ParamFindingTask(const std::string& url, Wordlist& wordlist,
     : url_{url},
       wordlist_{wordlist},
       threads_{threads},
-      probe_{HttpClient().Get(url)},
+      probe_{CreateProbe(url)},
       io_{},
       work_{io_} {}
 

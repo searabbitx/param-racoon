@@ -14,18 +14,19 @@ HttpClient::~HttpClient() { curl_easy_cleanup(curl_); }
 
 size_t WriteCallback(const char* contents, size_t size, size_t nmemb,
                      void* userp) {
-  (void)contents;
-  (void)userp;
+  static_cast<std::string*>(userp)->append(contents, size * nmemb);
   return size * nmemb;
 }
 
 Response HttpClient::Get(const std::string& host, const string_map_t& query) {
   curl_easy_setopt(curl_, CURLOPT_URL, CreateFullUrl(host, query).c_str());
   curl_easy_setopt(curl_, CURLOPT_WRITEFUNCTION, WriteCallback);
+  std::string content{};
+  curl_easy_setopt(curl_, CURLOPT_WRITEDATA, &content);
 
   PerformRequest();
 
-  return CreateResponse();
+  return CreateResponse(std::move(content));
 }
 
 std::string HttpClient::CreateFullUrl(const std::string& host,
@@ -58,12 +59,13 @@ void HttpClient::PerformRequest() {
   }
 }
 
-Response HttpClient::CreateResponse() {
+Response HttpClient::CreateResponse(std::string content) {
   long response_code{0};
   curl_easy_getinfo(curl_, CURLINFO_RESPONSE_CODE, &response_code);
 
   curl_off_t downloaded_bytes{0};
   curl_easy_getinfo(curl_, CURLINFO_SIZE_DOWNLOAD_T, &downloaded_bytes);
 
-  return Response(response_code, static_cast<long>(downloaded_bytes));
+  return Response(response_code, static_cast<long>(downloaded_bytes),
+                  std::move(content));
 }
