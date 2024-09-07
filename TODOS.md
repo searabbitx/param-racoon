@@ -1,3 +1,3 @@
 - [ ] handle connection failures
-- [ ] add some basic method to determine if parameter is correct 
+- [x] add some basic method to determine if parameter is correct 
 - [ ] paralellize tests
