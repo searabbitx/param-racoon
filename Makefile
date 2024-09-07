@@ -48,6 +48,8 @@ run-tests: $(BUILD_DIR)/$(TARGET_EXEC)
 	./$(BUILD_DIR)/$(TARGET_EXEC) -w test/wordlist/test.txt -m 'found a secret' 'http://localhost:8888/match.php'
 	@echo "\n---------- Running match.php test with filtering ----------\n"
 	./$(BUILD_DIR)/$(TARGET_EXEC) -w test/wordlist/test.txt -f 'found a nothing' 'http://localhost:8888/match.php'
+	@echo "\n---------- Running post.php test ----------\n"
+	./$(BUILD_DIR)/$(TARGET_EXEC) -w test/wordlist/test.txt -X POST 'http://localhost:8888/post.php'
 
 # Run
 .PHONY: run
