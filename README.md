@@ -112,4 +112,4 @@ make run-tests   # build sources and run all tests
 
 # requirements
 
-You will need `clang-tidy` and `clang-format` to run checks, `php >= 7.4` to run the webserver for test cases, libcurl and boost to build.
+You will need `clang-tidy` and `clang-format` to run checks, `php >= 7.4` to run the webserver for test cases, `libcurl` and `boost` to build.
