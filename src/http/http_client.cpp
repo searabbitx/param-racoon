@@ -11,11 +11,18 @@ HttpClient::HttpClient() : curl_(curl_easy_init()) {}
 
 HttpClient::~HttpClient() { curl_easy_cleanup(curl_); }
 
-Response HttpClient::Get(const std::string& url) {
+size_t WriteCallback(const char *contents, size_t size, size_t nmemb,
+                     void *userp) {
+  (void)contents;
+  (void)userp;
+  return size * nmemb;
+}
+
+Response HttpClient::Get(const std::string &url) {
   CURLcode res;
 
   curl_easy_setopt(curl_, CURLOPT_URL, url.c_str());
-  curl_easy_setopt(curl_, CURLOPT_NOBODY, 1);
+  curl_easy_setopt(curl_, CURLOPT_WRITEFUNCTION, WriteCallback);
 
   res = curl_easy_perform(curl_);
 
