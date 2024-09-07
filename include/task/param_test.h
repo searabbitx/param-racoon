@@ -18,7 +18,7 @@ class ParamTest {
  public:
   ParamTest(const Config& config, const std::string& param, const Probe& probe,
             std::vector<std::string>& results);
-  void Run();
+  bool Run();
 
  private:
   bool CheckParam();

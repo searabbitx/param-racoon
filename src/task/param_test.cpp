@@ -12,11 +12,13 @@ ParamTest::ParamTest(const Config& config, const std::string& param,
                      const Probe& probe, std::vector<std::string>& results)
     : config_{config}, param_{param}, probe_{probe}, results_{results} {};
 
-void ParamTest::Run() {
+bool ParamTest::Run() {
   if (CheckParam()) {
     std::lock_guard<std::mutex> guard{results_mtx};
     results_.push_back(param_);
+    return true;
   }
+  return false;
 }
 
 static string_map_t CreateParams(const std::string& param) {
