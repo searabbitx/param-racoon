@@ -24,8 +24,14 @@ Response HttpClient::Get(const std::string& host, const string_map_t& query) {
   std::string content{};
   curl_easy_setopt(curl_, CURLOPT_WRITEDATA, &content);
 
+  curl_slist* list{nullptr};
+  list = curl_slist_append(list, "X-Required-Header: foo");
+  list = curl_slist_append(list, "X-Other-Required-Header: foo");
+  curl_easy_setopt(curl_, CURLOPT_HTTPHEADER, list);
+
   PerformRequest();
 
+  curl_slist_free_all(list);
   return CreateResponse(std::move(content));
 }
 
