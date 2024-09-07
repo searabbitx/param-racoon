@@ -22,7 +22,7 @@ Allowed options:
 
 ### Examples:
 
-Basic usage:
+Basic usage (testing params based on a set of default heuristics):
 
 ```bash
 param-racoon \
