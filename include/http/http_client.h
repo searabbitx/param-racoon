@@ -30,7 +30,8 @@ class HttpClient {
                        const string_map_t& body_params = string_map_t(),
                        const string_vec_t& headers = string_vec_t(),
                        const std::string& cookies = "",
-                       const std::string& method = "GET");
+                       const std::string& method = "GET",
+                       const std::string& data = "");
   static std::string CreateFullUrl(const std::string& host,
                                    const string_map_t& query);
   void SetHeaders(curl_slist* list, const string_vec_t& headers);

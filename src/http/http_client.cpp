@@ -22,19 +22,24 @@ Response HttpClient::MakeRequest(const Target& target,
                                  const string_map_t& params) {
   if (target.Method() == "GET") {
     return MakeRequest(target.Url(), params, {{}}, target.Headers(),
-                       target.Cookies(), target.Method());
+                       target.Cookies(), target.Method(), target.Data());
   } else {
     return MakeRequest(target.Url(), {{}}, params, target.Headers(),
-                       target.Cookies(), target.Method());
+                       target.Cookies(), target.Method(), target.Data());
   }
 }
 
-static std::string CreateBodyString(const string_map_t& body_params) {
-  std::string result{};
-  if (body_params.empty()) {
-    return result;
+static std::string CreateBodyString(const std::string& data,
+                                    const string_map_t& additional_params) {
+  if (additional_params.empty()) {
+    return data;
   }
-  for (const auto& [key, value] : body_params) {
+  std::string result{};
+  if (!data.empty()) {
+    result += data;
+    result += '&';
+  }
+  for (const auto& [key, value] : additional_params) {
     result += key;
     result += '=';
     result += value;
@@ -49,7 +54,8 @@ Response HttpClient::MakeRequest(const std::string& host,
                                  const string_map_t& body_params,
                                  const string_vec_t& headers,
                                  const std::string& cookies,
-                                 const std::string& method) {
+                                 const std::string& method,
+                                 const std::string& data) {
   curl_easy_setopt(curl_, CURLOPT_CUSTOMREQUEST, method.c_str());
   curl_easy_setopt(curl_, CURLOPT_URL, CreateFullUrl(host, query).c_str());
   curl_easy_setopt(curl_, CURLOPT_URL, CreateFullUrl(host, query).c_str());
@@ -58,7 +64,7 @@ Response HttpClient::MakeRequest(const std::string& host,
   std::string content{};
   curl_easy_setopt(curl_, CURLOPT_WRITEDATA, &content);
 
-  std::string body{CreateBodyString(body_params)};
+  std::string body{CreateBodyString(data, body_params)};
   if (!body.empty()) {
     curl_easy_setopt(curl_, CURLOPT_POSTFIELDSIZE, body.length());
     curl_easy_setopt(curl_, CURLOPT_POSTFIELDS, body.c_str());

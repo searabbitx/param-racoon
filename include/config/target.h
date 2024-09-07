@@ -13,6 +13,7 @@ class Target {
   std::string method_;
   string_vec_t headers_{};
   std::string cookies_{};
+  std::string data_{};
   Target() = default;
 
  public:
@@ -20,5 +21,6 @@ class Target {
   [[nodiscard]] std::string Method() const;
   [[nodiscard]] string_vec_t Headers() const;
   [[nodiscard]] std::string Cookies() const;
+  [[nodiscard]] std::string Data() const;
   friend Config CreateConfigFromCliArgs(int argc, char **argv);
 };

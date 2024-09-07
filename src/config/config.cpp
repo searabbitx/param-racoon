@@ -129,5 +129,9 @@ Config CreateConfigFromCliArgs(int argc, char** argv) {
     config.target_.method_ = "GET";
   }
 
+  if (vm.count("data") != 0U) {
+    config.target_.data_ = vm["data"].as<std::string>();
+  }
+
   return config;
 }
