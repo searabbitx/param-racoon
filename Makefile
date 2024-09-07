@@ -62,6 +62,8 @@ run-tests: $(BUILD_DIR)/$(TARGET_EXEC)
 	./$(BUILD_DIR)/$(TARGET_EXEC) -q -w test/wordlist/test.txt -r test/get_header.txt 'http://localhost:8888/headers.php'
 	@echo "\n---------- Running post.php test with request from file ----------\n"
 	./$(BUILD_DIR)/$(TARGET_EXEC) -q -w test/wordlist/test.txt -r test/post.txt 'http://localhost:8888/post_with_required_params.php'
+	@echo "\n---------- Running json.php test with request from file ----------\n"
+	./$(BUILD_DIR)/$(TARGET_EXEC) -q -w test/wordlist/test.txt -r test/post_json.txt 'http://localhost:8888/json.php'
 
 # Run
 .PHONY: run

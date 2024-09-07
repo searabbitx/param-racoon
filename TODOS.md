@@ -21,3 +21,4 @@
 - [x] http proxy!
 - [x] fix a '=' in get body bug
 - [ ] support keywords like RPARAM and RVALUE in custom places to be replaced with param names and values
+- [ ] support reading crlf files

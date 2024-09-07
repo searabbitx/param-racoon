@@ -1,0 +1,8 @@
+POST /json.php HTTP/1.1
+Host: localhost:8888
+Accept: */*
+Content-Type: application/json
+Content-Length: 29
+Connection: close
+
+{"user":"bob","RACC_PNAME":"RACC_PVALUE"}
