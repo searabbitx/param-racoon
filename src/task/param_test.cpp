@@ -6,9 +6,9 @@
 
 std::mutex results_mtx;
 
-ParamTest::ParamTest(const Target& target, const std::string& param,
+ParamTest::ParamTest(const Config& config, const std::string& param,
                      const Probe& probe, std::vector<std::string>& results)
-    : target_{target}, param_{param}, probe_{probe}, results_{results} {};
+    : config_{config}, param_{param}, probe_{probe}, results_{results} {};
 
 void ParamTest::Run() {
   if (CheckParam()) {
@@ -29,7 +29,7 @@ bool ParamTest::CheckParam() {
 
 bool ParamTest::CompareWithProbeResponseLen() {
   const string_map_t query{{param_, "testvalue"}};
-  auto res{client_.Get(target_, query)};
+  auto res{client_.Get(config_.ATarget(), query)};
   return res.DownloadedBytes() != probe_.OriginalResponseLen();
 }
 
@@ -38,9 +38,10 @@ std::string ParamTest::CreateMalformedParamOfTheSameLen() {
 }
 
 bool ParamTest::CheckForReflectedParams() {
-  auto param_response{client_.Get(target_, CreateQuery(param_))};
+  auto target{config_.ATarget()};
+  auto param_response{client_.Get(target, CreateQuery(param_))};
   auto malformed_param_response{
-      client_.Get(target_, CreateQuery(CreateMalformedParamOfTheSameLen()))};
+      client_.Get(target, CreateQuery(CreateMalformedParamOfTheSameLen()))};
   return param_response.DownloadedBytes() !=
          malformed_param_response.DownloadedBytes();
 }

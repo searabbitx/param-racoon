@@ -7,9 +7,9 @@
 #include <thread>
 #include <vector>
 
+#include "config/config.h"
 #include "task/param_test.h"
 #include "task/probe.h"
-#include "config/config.h"
 
 std::mutex pending_tasks_mtx;
 
@@ -49,7 +49,7 @@ void ParamFindingTask::PostTests(long& pending_tasks) {
 handler_t ParamFindingTask::CreateParamTestFunction(const std::string& param,
                                                     long& pending_tasks) {
   return [=, &pending_tasks]() {
-    ParamTest(config_.ATarget(), param, probe_, results_).Run();
+    ParamTest(config_, param, probe_, results_).Run();
 
     std::lock_guard<std::mutex> guard{pending_tasks_mtx};
     --pending_tasks;
