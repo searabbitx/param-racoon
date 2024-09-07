@@ -1,4 +1,4 @@
-- [ ] handle connection failures
+- [x] handle connection failures
 - [x] add some basic method to determine if parameter is correct 
 - [x] paralellize tests
 - [ ] refactor all this config mess
