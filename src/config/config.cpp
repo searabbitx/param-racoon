@@ -8,8 +8,6 @@
 
 #include "config/target.h"
 
-namespace po = boost::program_options;
-
 Config::Config(Target target) : target_{std::move(target)} {}
 
 const Target& Config::ATarget() const { return target_; }
@@ -59,6 +57,20 @@ static bool IsUrlValid(const std::string& url) {
   return uc == CURLUcode::CURLUE_OK;
 }
 
+void Validate(const Config& config, const po::options_description& odesc) {
+  if (!IsUrlValid(config.target_.url_)) {
+    Err("invalid url", odesc);
+  }
+  if (!std::filesystem::exists(config.wordlist_path_)) {
+    Err("specified wordlist file ('" + config.wordlist_path_ +
+            "') does not exist.",
+        odesc);
+  }
+  if (!config.match_.empty() && !config.filter_.empty()) {
+    Err("match and filter options are mutually exlusive!", odesc);
+  }
+}
+
 Config CreateConfigFromCliArgs(int argc, char** argv) {
   const std::string usage_head{
       "Usage:\n"
@@ -105,28 +117,13 @@ Config CreateConfigFromCliArgs(int argc, char** argv) {
   Config config{Target()};
 
   SetRequiredValue<std::string>(config.target_.url_, "url", vm, odesc);
-  if (!IsUrlValid(config.target_.url_)) {
-    Err("invalid url", odesc);
-  }
-
   SetRequiredValue<std::string>(config.wordlist_path_, "wordlist", vm, odesc);
-  if (!std::filesystem::exists(config.wordlist_path_)) {
-    Err("specified wordlist file ('" + config.wordlist_path_ +
-            "') does not exist.",
-        odesc);
-  }
-
   SetValue<short>(config.threads_, "threads", vm);
   SetValue<std::vector<std::string>>(config.target_.headers_, "header", vm);
   SetValue<std::string>(config.target_.cookies_, "cookies", vm);
   SetValue<std::string>(config.target_.data_, "data", vm);
-
   SetValue<std::string>(config.match_, "match", vm);
   SetValue<std::string>(config.filter_, "filter", vm);
-  if (!config.match_.empty() && !config.filter_.empty()) {
-    Err("match and filter options are mutually exlusive!", odesc);
-  }
-
   SetValue<std::string>(config.target_.method_, "method", vm, "GET");
 
   return config;

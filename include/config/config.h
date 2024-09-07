@@ -1,10 +1,13 @@
 #pragma once
 
+#include <boost/program_options.hpp>
 #include <string>
 
 #include "config/target.h"
 
 constexpr short kDefaultThreads{10};
+
+namespace po = boost::program_options;
 
 class Config {
  private:
@@ -22,6 +25,8 @@ class Config {
   [[nodiscard]] std::string Filter() const;
   [[nodiscard]] short Threads() const;
   friend Config CreateConfigFromCliArgs(int argc, char **argv);
+  friend void Validate(const Config &config,
+                       const po::options_description &odesc);
 };
 
 Config CreateConfigFromCliArgs(int argc, char **argv);

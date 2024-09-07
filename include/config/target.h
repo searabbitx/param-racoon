@@ -1,11 +1,14 @@
 #pragma once
 
+#include <boost/program_options.hpp>
 #include <string>
 #include <vector>
 
 using string_vec_t = std::vector<std::string>;
 
 class Config;
+
+namespace po = boost::program_options;
 
 class Target {
  private:
@@ -22,5 +25,7 @@ class Target {
   [[nodiscard]] string_vec_t Headers() const;
   [[nodiscard]] std::string Cookies() const;
   [[nodiscard]] std::string Data() const;
-  friend Config CreateConfigFromCliArgs(int argc, char **argv);
+  friend Config CreateConfigFromCliArgs(int argc, char** argv);
+  friend void Validate(const Config& config,
+                       const po::options_description& odesc);
 };
