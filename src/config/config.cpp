@@ -20,6 +20,8 @@ std::string Config::Filter() const { return filter_; }
 
 short Config::Threads() const { return threads_; }
 
+short Config::MinDiff() const { return min_diff_; }
+
 static void Err(const std::string& error,
                 const po::options_description& odesc) {
   std::cout << "Error:\n  " << error << "\n\n" << odesc << '\n';
@@ -93,7 +95,10 @@ Config CreateConfigFromCliArgs(int argc, char** argv) {
       "match a string in response to recognize valid params")(
       "filter,f", po::value<std::string>(),
       "filter out responses with a string to recognize valid params")(
-      "url", po::value<std::string>(), "set target url");
+      "min-diff,D", po::value<short>(),
+      "minimal difference in response length that is required to consider "
+      "response 'different' (default: 1)")("url", po::value<std::string>(),
+                                           "set target url");
   po::positional_options_description pdesc;
   pdesc.add("url", 1);
 
@@ -119,6 +124,7 @@ Config CreateConfigFromCliArgs(int argc, char** argv) {
   SetRequiredValue<std::string>(config.target_.url_, "url", vm, odesc);
   SetRequiredValue<std::string>(config.wordlist_path_, "wordlist", vm, odesc);
   SetValue<short>(config.threads_, "threads", vm);
+  SetValue<short>(config.min_diff_, "min-diff", vm);
   SetValue<std::vector<std::string>>(config.target_.headers_, "header", vm);
   SetValue<std::string>(config.target_.cookies_, "cookies", vm);
   SetValue<std::string>(config.target_.data_, "data", vm);

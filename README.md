@@ -19,6 +19,8 @@ Allowed options:
   -m [ --match ] arg    match a string in response to recognize valid params
   -f [ --filter ] arg   filter out responses with a string to recognize valid 
                         params
+  -D [ --min-diff ] arg minimal difference in response length that is required 
+                        to consider response 'different' (default: 1)
   --url arg             set target url
 ```
 
@@ -54,6 +56,11 @@ param-racoon -w 'wordlist/params.txt' -X POST -d 'name=foo&id=100' 'http://examp
 ```
 
 **Note**: If you use `-m FOO` or `-f FOO` switch, the only test that will be performed is checking if `FOO` is present/absent in the response for each param.
+
+Ignoring variance in responses less than 5 bytes:
+```
+param-racoon -w 'wordlist/params.txt' --min-diff 5 'http://example.com/some/endpoint'
+```
 
 # building
 
