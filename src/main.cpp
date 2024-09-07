@@ -15,6 +15,7 @@ int main(int argc, char* argv[]) {
   std::cout << "🦝 Hello.\n";
   std::cout << "🦝🦝🦝🦝\n";
   std::cout << "🦝 url: " << config.ATarget().Url() << '\n';
+  std::cout << "🦝 method: " << config.ATarget().Method() << '\n';
   std::cout << "🦝 wordlist: " << config.WordlistPath() << '\n';
   std::cout << "🦝 words: " << wordlist.Total() << '\n';
   std::cout << "🦝 threads: " << config.Threads() << '\n';
