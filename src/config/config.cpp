@@ -136,16 +136,16 @@ Config CreateConfigFromCliArgs(int argc, char** argv) {
 
   Config config{Target()};
 
-  SetRequiredValue<std::string>(config.target_.url_, "url", vm, odesc);
-  SetRequiredValue<std::string>(config.wordlist_path_, "wordlist", vm, odesc);
-  SetValue<short>(config.threads_, "threads", vm);
-  SetValue<short>(config.min_diff_, "min-diff", vm);
-  SetValue<std::vector<std::string>>(config.target_.headers_, "header", vm);
-  SetValue<std::string>(config.target_.agent_, "agent", vm);
-  SetValue<std::string>(config.target_.cookies_, "cookies", vm);
-  SetValue<std::string>(config.target_.data_, "data", vm);
-  SetValue<std::string>(config.match_, "match", vm);
-  SetValue<std::string>(config.filter_, "filter", vm);
+  SetRequiredValue(config.target_.url_, "url", vm, odesc);
+  SetRequiredValue(config.wordlist_path_, "wordlist", vm, odesc);
+  SetValue(config.threads_, "threads", vm);
+  SetValue(config.min_diff_, "min-diff", vm);
+  SetValue(config.target_.headers_, "header", vm);
+  SetValue(config.target_.agent_, "agent", vm);
+  SetValue(config.target_.cookies_, "cookies", vm);
+  SetValue(config.target_.data_, "data", vm);
+  SetValue(config.match_, "match", vm);
+  SetValue(config.filter_, "filter", vm);
   SetValue<std::string>(config.target_.method_, "method", vm, "GET");
   SetValue(config.quiet_, "quiet", vm);
 
