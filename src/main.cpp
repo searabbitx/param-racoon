@@ -1,6 +1,8 @@
 #include <curl/curl.h>
 
 #include <iostream>
+#include <map>
+#include <string>
 
 #include "http/http_client.h"
 #include "http/response.h"
@@ -10,7 +12,9 @@ int main() {
   std::cout << "Hello." << std::endl;
 
   HttpClient client{};
-  const Response response{client.Get("http://localhost:8888/test_params.php")};
+  const std::map<std::string, std::string> query{{"foo", "bar"}};
+  const Response response{
+      client.Get("http://localhost:8888/test_params.php", query)};
   std::cout << "Response code: " << response.Code() << std::endl;
   std::cout << "Response length: " << response.DownloadedBytes() << std::endl;
 }
