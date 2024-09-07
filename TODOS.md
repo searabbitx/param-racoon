@@ -19,5 +19,5 @@
 - [x] check response codes before response len
 - [x] specify user-agent
 - [x] http proxy!
-- [ ] fix a '=' in get body bug
+- [x] fix a '=' in get body bug
 - [ ] support keywords like RPARAM and RVALUE in custom places to be replaced with param names and values

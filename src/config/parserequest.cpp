@@ -39,9 +39,9 @@ std::string ParseRequest(const std::string& request_file_path, Config& config) {
   }
   auto remaining{full_len - request_stream.tellg()};
   if (remaining) {
-    auto data{std::make_unique<char[]>(remaining)};
-    request_stream.read(data.get(), remaining);
-    config.target_.data_ = data.get();
+    auto data{std::vector<char>(remaining)};
+    request_stream.read(data.data(), remaining);
+    config.target_.data_ = data.data();
   }
 
   return "";
