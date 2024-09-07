@@ -22,6 +22,8 @@ Allowed options:
                         params
   -D [ --min-diff ] arg minimal difference in response length that is required 
                         to consider response 'different' (default: 1)
+  -p [ --proxy ] arg    use the specified proxy (format: [protocol://]host[:port])
+  -q [ --quiet ]        do not print the banner and configuration table
   --url arg             set target url
 ```
 
