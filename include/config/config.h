@@ -14,7 +14,7 @@ class Config {
   explicit Config(Target target);
 
  public:
-  [[nodiscard]] Target ATarget() const;
+  [[nodiscard]] const Target &ATarget() const;
   [[nodiscard]] std::string WordlistPath() const;
   [[nodiscard]] short Threads() const;
   friend Config CreateConfigFromCliArgs(int argc, char **argv);

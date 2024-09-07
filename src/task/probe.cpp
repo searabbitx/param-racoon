@@ -2,6 +2,7 @@
 
 #include <string>
 
+#include "config/target.h"
 #include "http/http_client.h"
 #include "http/response.h"
 
@@ -15,18 +16,18 @@ bool Probe::AreParametersReflected() const {
 const std::string kParamNameCanary{"abcdefghijklmn123"};
 const std::string kParamValueCanary{"pqrstuvwyz321"};
 
-bool AreParametersReflected(HttpClient& client, const std::string& url) {
+static bool AreParametersReflected(HttpClient& client, const Target& target) {
   string_map_t params{{kParamNameCanary, kParamValueCanary}};
-  auto res{client.Get(url, params)};
+  auto res{client.Get(target, params)};
   auto content{res.Content()};
   return sv::npos != content.find(kParamNameCanary) &&
          sv::npos != content.find(kParamValueCanary);
 }
 
-Probe CreateProbe(const std::string& url) {
+Probe CreateProbe(const Target& target) {
   auto client{HttpClient()};
   auto probe{Probe()};
-  probe.original_response_len_ = client.Get(url).DownloadedBytes();
-  probe.are_parameters_reflected_ = AreParametersReflected(client, url);
+  probe.original_response_len_ = client.Get(target).DownloadedBytes();
+  probe.are_parameters_reflected_ = AreParametersReflected(client, target);
   return probe;
 }

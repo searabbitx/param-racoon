@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 
+#include "config/target.h"
 #include "task/probe.h"
 #include "wordlist/wordlist.h"
 
@@ -12,7 +13,7 @@ using handler_t = std::function<void()>;
 
 class ParamFindingTask {
  private:
-  const std::string url_;
+  const Target& target_;
   Wordlist& wordlist_;
   short threads_;
   Probe probe_;
@@ -21,7 +22,7 @@ class ParamFindingTask {
   std::vector<std::string> results_{};
 
  public:
-  ParamFindingTask(const std::string& url, Wordlist& wordlist, short threads);
+  ParamFindingTask(const Target& target, Wordlist& wordlist, short threads);
   std::vector<std::string> Run();
 
  private:

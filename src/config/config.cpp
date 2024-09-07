@@ -12,7 +12,7 @@ namespace po = boost::program_options;
 
 Config::Config(Target target) : target_{std::move(target)} {}
 
-Target Config::ATarget() const { return target_; }
+const Target& Config::ATarget() const { return target_; }
 
 std::string Config::WordlistPath() const { return wordlist_path_; }
 
@@ -88,6 +88,9 @@ Config CreateConfigFromCliArgs(int argc, char** argv) {
   if (vm.count("threads") != 0U) {
     config.threads_ = vm["threads"].as<short>();
   }
+
+  config.target_.headers_.push_back("X-Required-Header: foo");
+  config.target_.headers_.push_back("X-Other-Required-Header: bar");
 
   return config;
 }

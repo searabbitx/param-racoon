@@ -2,6 +2,7 @@
 
 #include <string>
 
+#include "config/target.h"
 #include "http/response.h"
 
 class Probe {
@@ -13,7 +14,7 @@ class Probe {
  public:
   [[nodiscard]] long OriginalResponseLen() const;
   [[nodiscard]] bool AreParametersReflected() const;
-  friend Probe CreateProbe(const std::string& url);
+  friend Probe CreateProbe(const Target& target);
 };
 
-Probe CreateProbe(const std::string& url);
+Probe CreateProbe(const Target& target);

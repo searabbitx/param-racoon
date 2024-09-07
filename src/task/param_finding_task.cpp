@@ -12,12 +12,12 @@
 
 std::mutex pending_tasks_mtx;
 
-ParamFindingTask::ParamFindingTask(const std::string& url, Wordlist& wordlist,
+ParamFindingTask::ParamFindingTask(const Target& target, Wordlist& wordlist,
                                    short threads)
-    : url_{url},
+    : target_{target},
       wordlist_{wordlist},
       threads_{threads},
-      probe_{CreateProbe(url)},
+      probe_{CreateProbe(target)},
       io_{},
       work_{io_} {}
 
@@ -50,7 +50,7 @@ void ParamFindingTask::PostTests(long& pending_tasks) {
 handler_t ParamFindingTask::CreateParamTestFunction(const std::string& param,
                                                     long& pending_tasks) {
   return [=, &pending_tasks]() {
-    ParamTest(url_, param, probe_, results_).Run();
+    ParamTest(target_, param, probe_, results_).Run();
 
     std::lock_guard<std::mutex> guard{pending_tasks_mtx};
     --pending_tasks;

@@ -18,6 +18,10 @@ size_t WriteCallback(const char* contents, size_t size, size_t nmemb,
   return size * nmemb;
 }
 
+Response HttpClient::Get(const Target& target, const string_map_t& query) {
+  return Get(target.Url(), query, target.Headers());
+}
+
 Response HttpClient::Get(const std::string& host, const string_map_t& query,
                          const string_vec_t& headers) {
   curl_easy_setopt(curl_, CURLOPT_URL, CreateFullUrl(host, query).c_str());

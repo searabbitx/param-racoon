@@ -19,7 +19,7 @@ int main(int argc, char* argv[]) {
   std::cout << "🦝 words: " << wordlist.Total() << "\n";
   std::cout << "🦝 threads: " << config.Threads() << "\n\n";
 
-  ParamFindingTask task{config.ATarget().Url(), wordlist, config.Threads()};
+  ParamFindingTask task{config.ATarget(), wordlist, config.Threads()};
 
   const auto params{task.Run()};
 
