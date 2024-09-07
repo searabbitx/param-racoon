@@ -14,10 +14,14 @@ Allowed options:
   -w [ --wordlist ] arg set path to the wordlist file
   -H [ --header ] arg   set a header
   -c [ --cookies ] arg  set cookies (in "NAME1=VAL1; NAME2=VAL2" format)
+  -m [ --match ] arg    match a string in response to recognize valid params
   --url arg             set target url
 ```
 
-Example:
+### Examples:
+
+Basic usage:
+
 ```bash
 param-racoon \
     -t 5 \
@@ -26,6 +30,12 @@ param-racoon \
     -H 'X-Requested-With: XMLHttpRequest' \
     -c 'PHPSESSID=dc12e575ca; LANG=en' \
     'http://example.com/some/endpoint'
+```
+
+Looking for a specific string in response to recognize valid params:
+
+```bash
+param-racoon -w 'wordlist/params.txt' -m 'Success!' 'http://example.com/some/endpoint'
 ```
 
 # building
