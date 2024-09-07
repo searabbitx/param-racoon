@@ -10,14 +10,15 @@
 int main(int argc, char* argv[]) {
   curl_global_init(CURL_GLOBAL_ALL);
   const Config config{CreateConfigFromCliArgs(argc, argv)};
+  Wordlist wordlist{config.WordlistPath()};
 
   std::cout << "🦝 Hello.\n";
   std::cout << "🦝🦝🦝🦝\n";
   std::cout << "🦝 url: " << config.Url() << '\n';
   std::cout << "🦝 wordlist: " << config.WordlistPath() << "\n\n";
+  std::cout << "🦝 words: " << wordlist.Total() << "\n";
   std::cout << "🦝 threads: " << config.Threads() << "\n\n";
 
-  Wordlist wordlist{config.WordlistPath()};
   ParamFindingTask task{config.Url(), wordlist, config.Threads()};
 
   const auto params{task.Run()};
