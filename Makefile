@@ -41,7 +41,7 @@ run-tests: $(BUILD_DIR)/$(TARGET_EXEC)
 	@echo "\n---------- Running reflecting.php test ----------\n"
 	./$(BUILD_DIR)/$(TARGET_EXEC) -w test/wordlist/test.txt 'http://localhost:8888/reflecting.php'
 	@echo "\n---------- Running headers.php test ----------\n"
-	./$(BUILD_DIR)/$(TARGET_EXEC) -w test/wordlist/test.txt 'http://localhost:8888/headers.php'
+	./$(BUILD_DIR)/$(TARGET_EXEC) -w test/wordlist/test.txt -H 'X-Required-Header: someval' -H 'X-Other-Required-Header: otherval' 'http://localhost:8888/headers.php'
 
 # Run
 .PHONY: run

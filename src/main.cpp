@@ -15,9 +15,16 @@ int main(int argc, char* argv[]) {
   std::cout << "🦝 Hello.\n";
   std::cout << "🦝🦝🦝🦝\n";
   std::cout << "🦝 url: " << config.ATarget().Url() << '\n';
-  std::cout << "🦝 wordlist: " << config.WordlistPath() << "\n\n";
-  std::cout << "🦝 words: " << wordlist.Total() << "\n";
-  std::cout << "🦝 threads: " << config.Threads() << "\n\n";
+  std::cout << "🦝 wordlist: " << config.WordlistPath() << '\n';
+  std::cout << "🦝 words: " << wordlist.Total() << '\n';
+  std::cout << "🦝 threads: " << config.Threads() << '\n';
+  if (!config.ATarget().Headers().empty()) {
+    std::cout << "🦝 headers: ";
+    for (const auto& header : config.ATarget().Headers()) {
+      std::cout << header << "\n            ";
+    }
+  }
+  std::cout << '\n';
 
   ParamFindingTask task{config.ATarget(), wordlist, config.Threads()};
 

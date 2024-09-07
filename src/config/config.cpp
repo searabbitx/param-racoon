@@ -42,6 +42,7 @@ Config CreateConfigFromCliArgs(int argc, char** argv) {
   odesc.add_options()("help,h", "produce help message")(
       "threads,t", po::value<short>(), "set number of threads (default: 10)")(
       "wordlist,w", po::value<std::string>(), "set path to the wordlist file")(
+      "header,H", po::value<std::vector<std::string>>(), "set a header")(
       "url", po::value<std::string>(), "set target url");
   po::positional_options_description pdesc;
   pdesc.add("url", 1);
@@ -89,8 +90,9 @@ Config CreateConfigFromCliArgs(int argc, char** argv) {
     config.threads_ = vm["threads"].as<short>();
   }
 
-  config.target_.headers_.push_back("X-Required-Header: foo");
-  config.target_.headers_.push_back("X-Other-Required-Header: bar");
+  if (vm.count("header") != 0U) {
+    config.target_.headers_ = vm["header"].as<std::vector<std::string>>();
+  }
 
   return config;
 }
