@@ -1,5 +1,7 @@
 #include "config/config.h"
 
+#include <curl/curl.h>
+
 #include <boost/program_options.hpp>
 #include <filesystem>
 #include <iostream>
@@ -16,6 +18,13 @@ static void Err(const std::string& error,
                 const po::options_description& odesc) {
   std::cout << "Error:\n  " << error << "\n\n" << odesc << '\n';
   std::exit(1);
+}
+
+static bool IsUrlValid(const std::string& url) {
+  CURLU* h{curl_url()};
+  CURLUcode uc{curl_url_set(h, CURLUPART_URL, url.c_str(), 0)};
+  curl_url_cleanup(h);
+  return uc == CURLUcode::CURLUE_OK;
 }
 
 Config CreateConfigFromCliArgs(int argc, char** argv) {
@@ -54,6 +63,9 @@ Config CreateConfigFromCliArgs(int argc, char** argv) {
 
   if (vm.count("url") != 0U) {
     config.url_ = vm["url"].as<std::string>();
+    if (!IsUrlValid(config.url_)) {
+      Err("invalid url", odesc);
+    }
   } else {
     Err("url is missing", odesc);
   }
