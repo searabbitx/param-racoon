@@ -51,6 +51,8 @@ Config CreateConfigFromCliArgs(int argc, char** argv) {
       "set cookies (in \"NAME1=VAL1; NAME2=VAL2\" format)")(
       "method,X", po::value<std::string>(),
       "set request method (default: GET)")(
+      "data,d", po::value<std::string>(),
+      "set data to be send in request body")(
       "match,m", po::value<std::string>(),
       "match a string in response to recognize valid params")(
       "filter,f", po::value<std::string>(),
