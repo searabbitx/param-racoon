@@ -18,4 +18,7 @@ class ParamTest {
   ParamTest(const std::string& url, const std::string& param,
             const Probe& probe, std::vector<std::string>& results);
   void Run();
+
+ private:
+  bool CheckParam();
 };

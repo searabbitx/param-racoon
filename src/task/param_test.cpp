@@ -11,10 +11,14 @@ ParamTest::ParamTest(const std::string& url, const std::string& param,
     : url_(url), param_(param), probe_(probe), results_(results){};
 
 void ParamTest::Run() {
-  const string_map_t query{{param_, "testvalue"}};
-  auto res{client_.Get(url_, query)};
-  if (res.DownloadedBytes() != probe_.OriginalResponseLen()) {
+  if (CheckParam()) {
     std::lock_guard<std::mutex> guard{results_mtx};
     results_.push_back(param_);
   }
+}
+
+bool ParamTest::CheckParam() {
+  const string_map_t query{{param_, "testvalue"}};
+  auto res{client_.Get(url_, query)};
+  return res.DownloadedBytes() != probe_.OriginalResponseLen();
 }
