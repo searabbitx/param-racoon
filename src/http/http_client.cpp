@@ -19,8 +19,7 @@ size_t WriteCallback(const char *contents, size_t size, size_t nmemb,
   return size * nmemb;
 }
 
-Response HttpClient::Get(const std::string &host,
-                         const std::map<std::string, std::string> &query) {
+Response HttpClient::Get(const std::string &host, const string_map &query) {
   CURLcode res;
 
   curl_easy_setopt(curl_, CURLOPT_URL, CreateFullUrl(host, query).c_str());
@@ -36,8 +35,8 @@ Response HttpClient::Get(const std::string &host,
   return CreateResponse();
 }
 
-std::string HttpClient::CreateFullUrl(
-    const std::string &host, const std::map<std::string, std::string> &query) {
+std::string HttpClient::CreateFullUrl(const std::string &host,
+                                      const string_map &query) {
   CURLU *url{curl_url()};
   curl_url_set(url, CURLUPART_URL, host.c_str(), 0);
 

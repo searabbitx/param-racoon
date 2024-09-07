@@ -17,4 +17,6 @@ int main() {
       client.Get("http://localhost:8888/test_params.php", query)};
   std::cout << "Response code: " << response.Code() << std::endl;
   std::cout << "Response length: " << response.DownloadedBytes() << std::endl;
+
+  curl_global_cleanup();
 }
