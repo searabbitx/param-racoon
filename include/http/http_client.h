@@ -15,6 +15,8 @@ class HttpClient {
 
  public:
   HttpClient();
+  HttpClient(const HttpClient& other) = delete;
+  HttpClient& operator=(const HttpClient& other) = delete;
   ~HttpClient();
   Response Get(const std::string& host,
                const string_map_t& query = string_map_t());
