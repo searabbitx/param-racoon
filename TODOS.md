@@ -2,8 +2,9 @@
 - [x] add some basic method to determine if parameter is correct 
 - [x] paralellize tests
 - [ ] refactor all this config mess
-- [ ] use heuristics different than response size comparison
+- [x] hondle reflected params
 - [ ] add progress bar
 - [ ] support POST, PUT, DELETE
 - [ ] support reading requests from txt file
-- [ ] support passing headers and cookies
+- [ ] support passing headers
+- [ ] support passing cookies
