@@ -34,13 +34,13 @@ param-racoon \
     'http://example.com/some/endpoint'
 ```
 
-Looking for a specific string in response to recognize valid params:
+Looking for a specific string in the response to recognize valid params:
 
 ```bash
 param-racoon -w 'wordlist/params.txt' -m 'Success!' 'http://example.com/some/endpoint'
 ```
 
-Looking for a specific string in response to filter out invalid params:
+Looking for a specific string in the response to filter out invalid params:
 
 ```bash
 param-racoon -w 'wordlist/params.txt' -f 'Error!' 'http://example.com/some/endpoint'
