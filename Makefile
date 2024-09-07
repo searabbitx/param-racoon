@@ -58,6 +58,8 @@ run-tests: $(BUILD_DIR)/$(TARGET_EXEC)
 	./$(BUILD_DIR)/$(TARGET_EXEC) -q -w test/wordlist/test.txt 'http://localhost:8888/response_codes.php'
 	@echo "\n---------- Running agent.php test ----------\n"
 	./$(BUILD_DIR)/$(TARGET_EXEC) -q -w test/wordlist/test.txt -a 'TestAgent' 'http://localhost:8888/agent.php'
+	@echo "\n---------- Running headers.php test with request from file ----------\n"
+	./$(BUILD_DIR)/$(TARGET_EXEC) -q -w test/wordlist/test.txt -r test/get_header.txt 'http://localhost:8888/headers.php'
 
 # Run
 .PHONY: run

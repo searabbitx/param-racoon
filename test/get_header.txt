@@ -1,0 +1,9 @@
+GET /headers.php?required=someval HTTP/1.1
+User-Agent: Foo
+Host: localhost:8888
+Accept-Language: en-us
+X-Requested-With: YourMom
+X-Required-Header: Hello
+X-Other-Required-Header: World
+Accept-Encoding: gzip, deflate
+Connection: Keep-Alive
