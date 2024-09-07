@@ -5,7 +5,7 @@
 - [x] handle reflected params
 - [x] add progress bar
 - [x] support POST, PUT, DELETE
-- [ ] support reading requests from txt file
+- [ ] support reading requests from txt file (something like parseRawRequest in optionsparser.go in ffuf?)
 - [x] support passing headers
 - [x] support passing cookies
 - [x] add a switch to recognize valid parameters based on presence of some string in the response
