@@ -128,7 +128,9 @@ void HttpClient::SetAbsoluteUri(CURLU* url, const std::string& absolute_uri) {
 
 void HttpClient::SetHeaders(curl_slist* list, const string_vec_t& headers) {
   for (const auto& header : headers) {
-    list = curl_slist_append(list, header.c_str());
+    if (header.find("Content-Length: ") != 0) {
+      list = curl_slist_append(list, header.c_str());
+    }
   }
   curl_easy_setopt(curl_, CURLOPT_HTTPHEADER, list);
 }

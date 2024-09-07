@@ -147,6 +147,8 @@ Config CreateConfigFromCliArgs(int argc, char** argv) {
     if (!err.empty()) {
       Err(err, odesc);
     }
+  } else {
+    SetValue<std::string>(config.target_.method_, "method", vm, "GET");
   }
 
   SetRequiredValue(config.target_.url_, "url", vm, odesc);
@@ -159,7 +161,6 @@ Config CreateConfigFromCliArgs(int argc, char** argv) {
   SetValue(config.target_.data_, "data", vm);
   SetValue(config.match_, "match", vm);
   SetValue(config.filter_, "filter", vm);
-  SetValue<std::string>(config.target_.method_, "method", vm, "GET");
   SetValue(config.quiet_, "quiet", vm);
   SetValue(config.target_.proxy_, "proxy", vm);
 
