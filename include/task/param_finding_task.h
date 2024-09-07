@@ -22,8 +22,9 @@ class ParamFindingTask {
 
  private:
   void CreateThreads(boost::thread_group& threads);
-  void PostTests(Response& probe, std::vector<std::string>& results);
+  void PostTests(Response& probe, std::vector<std::string>& results,
+                 long& pending_tasks);
   std::function<void()> CreateParamTestFunction(
       const std::string& param, const Response& probe,
-      std::vector<std::string>& results);
+      std::vector<std::string>& results, long& pending_tasks);
 };
