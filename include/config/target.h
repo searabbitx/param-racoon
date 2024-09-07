@@ -20,6 +20,7 @@ class Target {
   std::string cookies_{};
   std::string data_{};
   std::string agent_{kDefaultAgent};
+  std::string proxy_{};
   Target() = default;
 
  public:
@@ -29,6 +30,7 @@ class Target {
   [[nodiscard]] std::string Cookies() const;
   [[nodiscard]] std::string Data() const;
   [[nodiscard]] std::string Agent() const;
+  [[nodiscard]] std::string Proxy() const;
   friend Config CreateConfigFromCliArgs(int argc, char** argv);
   friend void Validate(const Config& config,
                        const po::options_description& odesc);

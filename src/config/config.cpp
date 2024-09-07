@@ -112,6 +112,8 @@ Config CreateConfigFromCliArgs(int argc, char** argv) {
       "min-diff,D", po::value<short>(),
       "minimal difference in response length that is required to consider "
       "response 'different' (default: 1)")(
+      "proxy,p", po::value<std::string>(),
+      "use the specified proxy (format: [protocol://]host[:port])")(
       "quiet,q", "do not print the banner and configuration table")(
       "url", po::value<std::string>(), "set target url");
   po::positional_options_description pdesc;
@@ -148,6 +150,7 @@ Config CreateConfigFromCliArgs(int argc, char** argv) {
   SetValue(config.filter_, "filter", vm);
   SetValue<std::string>(config.target_.method_, "method", vm, "GET");
   SetValue(config.quiet_, "quiet", vm);
+  SetValue(config.target_.proxy_, "proxy", vm);
 
   Validate(config, odesc);
 
