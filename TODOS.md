@@ -11,3 +11,4 @@
 - [x] add a switch to recognize valid parameters based on presence of some string in the response
 - [x] add a switch to recognize valid parameters based on lack of presence of some string in the response
 - [ ] refactor main function (extract config display logic)
+- [ ] cache requests made only to obtain response length and reuse those lengths later
