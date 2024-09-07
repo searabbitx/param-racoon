@@ -7,7 +7,7 @@
 
 #include "http/response.h"
 
-using string_map = std::map<std::string, std::string>;
+using string_map_t = std::map<std::string, std::string>;
 
 class HttpClient {
  private:
@@ -16,12 +16,11 @@ class HttpClient {
  public:
   HttpClient();
   ~HttpClient();
-  Response Get(const std::string& host,
-               const std::map<std::string, std::string>& query);
+  Response Get(const std::string& host, const string_map_t& query);
 
  private:
   static std::string CreateFullUrl(const std::string& host,
-                                   const string_map& query);
+                                   const string_map_t& query);
   Response CreateResponse();
   void PerformRequest();
 };
