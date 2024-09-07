@@ -1,7 +1,7 @@
 - [x] handle connection failures
 - [x] add some basic method to determine if parameter is correct 
 - [x] paralellize tests
-- [ ] refactor all this config mess (templates!)
+- [x] refactor all this config mess (templates!)
 - [x] handle reflected params
 - [x] add progress bar
 - [x] support POST, PUT, DELETE
