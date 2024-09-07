@@ -34,4 +34,6 @@ class Target {
   friend Config CreateConfigFromCliArgs(int argc, char** argv);
   friend void Validate(const Config& config,
                        const po::options_description& odesc);
+  friend std::string ParseRequest(const std::string& request_file_path,
+                                  Config& config);
 };

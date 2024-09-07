@@ -19,3 +19,4 @@
 - [x] check response codes before response len
 - [x] specify user-agent
 - [x] http proxy!
+- [ ] fix a '=' in get body bug

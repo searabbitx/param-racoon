@@ -143,7 +143,10 @@ Config CreateConfigFromCliArgs(int argc, char** argv) {
 
   if (vm.count("request") != 0U) {
     auto req_path{vm["request"].as<std::string>()};
-    ParseRequest(req_path, config);
+    auto err{ParseRequest(req_path, config)};
+    if (!err.empty()) {
+      Err(err, odesc);
+    }
   }
 
   SetRequiredValue(config.target_.url_, "url", vm, odesc);

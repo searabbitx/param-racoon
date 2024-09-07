@@ -4,4 +4,4 @@
 
 #include "config/config.h"
 
-void ParseRequest(std::string_view request_file, Config& config);
+std::string ParseRequest(const std::string& request_file_path, Config& config);
