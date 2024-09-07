@@ -18,5 +18,6 @@ class ParamFindingTask {
   std::vector<std::string> Run();
 
  private:
-  bool testParam(const std::string& param, const Response& probe);
+  void testParam(const std::string& param, const Response& probe,
+                 std::vector<std::string>& results);
 };

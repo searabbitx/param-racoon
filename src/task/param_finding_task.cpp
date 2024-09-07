@@ -15,17 +15,17 @@ std::vector<std::string> ParamFindingTask::Run() {
   std::vector<std::string> results{};
   while (wordlist_.HasMore()) {
     auto param{wordlist_.NextWord()};
-    if (testParam(param, probe)) {
-      results.push_back(param);
-    }
+    testParam(param, probe, results);
   }
-
   return results;
 }
 
-bool ParamFindingTask::testParam(const std::string& param,
-                                 const Response& probe) {
+void ParamFindingTask::testParam(const std::string& param,
+                                 const Response& probe,
+                                 std::vector<std::string>& results) {
   const string_map_t query{{param, "testvalue"}};
   auto res{http_client_.Get(url_, query)};
-  return res.DownloadedBytes() != probe.DownloadedBytes();
+  if (res.DownloadedBytes() != probe.DownloadedBytes()) {
+    results.push_back(param);
+  }
 }
