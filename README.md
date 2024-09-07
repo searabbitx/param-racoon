@@ -73,6 +73,26 @@ param-racoon -w 'wordlist/params.txt' -r get_request.txt 'http://example.com/'
 ```
 **Note**: The path in the request line read from a file overrides the path part of url passed via command line
 
+🦝 Making a POST request with content type other than `application/x-www-form-urlencoded`:
+
+_request.txt_
+```
+POST /something HTTP/1.1
+Host: example.com
+Accept: */*
+Content-Type: application/json
+Content-Length: 29
+Connection: close
+
+{"user":"bob","RACC_PNAME":"RACC_PVALUE"}
+```
+
+```
+param-racoon -w 'wordlist/params.txt' -r request.txt 'http://example.com/'
+```
+
+`RACC_PNAME` and `RACC_PVALUE` will be replaced with param names and values accordingly.
+
 # building
 
 To build source simply run:
