@@ -19,11 +19,11 @@ Allowed options:
   -X [ --method ] arg   set request method (default: GET)
   -d [ --data ] arg     set data to be sent in request body
   -m [ --match ] arg    match a string in response to recognize valid params
-  -f [ --filter ] arg   filter out responses with a string to recognize valid 
-                        params
+  -f [ --filter ] arg   filter out responses with a string to recognize valid params
   -D [ --min-diff ] arg minimal difference in response length that is required 
                         to consider response 'different' (default: 1)
   -p [ --proxy ] arg    use the specified proxy (format: [protocol://]host[:port])
+  -r [ --request ] arg  read a raw http request from the specified file
   -q [ --quiet ]        do not print the banner and configuration table
   --url arg             set target url
 ```
@@ -66,6 +66,12 @@ Ignoring variance in responses less than 5 bytes:
 ```
 param-racoon -w 'wordlist/params.txt' --min-diff 5 'http://example.com/some/endpoint'
 ```
+
+Reading a raw http request from a file:
+```
+param-racoon -w 'wordlist/params.txt' -r get_request.txt 'http://example.com/'
+```
+**Note**: The path in the request line read from a file overrides the path part of url passed via command line
 
 # building
 
