@@ -48,6 +48,7 @@ static void PrintBannerTableEntry(std::string_view name,
   for (const auto& value : vec) {
     std::cout << value << "\n" << kEmptyCol;
   }
+  std::cout << '\n';
 }
 
 void logging::PrintBanner(const Config& config, const Wordlist& wordlist) {
