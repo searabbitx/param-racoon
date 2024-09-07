@@ -52,7 +52,7 @@ Config CreateConfigFromCliArgs(int argc, char** argv) {
       "method,X", po::value<std::string>(),
       "set request method (default: GET)")(
       "data,d", po::value<std::string>(),
-      "set data to be send in request body")(
+      "set data to be sent in request body")(
       "match,m", po::value<std::string>(),
       "match a string in response to recognize valid params")(
       "filter,f", po::value<std::string>(),
