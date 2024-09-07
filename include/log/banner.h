@@ -5,6 +5,6 @@
 
 namespace logging {
 
-void printBanner(const Config& config, const Wordlist& wordlist);
+void PrintBanner(const Config& config, const Wordlist& wordlist);
 
 }
