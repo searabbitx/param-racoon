@@ -23,7 +23,8 @@ class HttpClient {
   ~HttpClient();
   Response Get(const std::string& host,
                const string_map_t& query = string_map_t(),
-               const string_vec_t& headers = string_vec_t());
+               const string_vec_t& headers = string_vec_t(),
+               const std::string& cookies = "");
 
   Response Get(const Target& target,
                const string_map_t& query = string_map_t());
@@ -31,6 +32,8 @@ class HttpClient {
  private:
   static std::string CreateFullUrl(const std::string& host,
                                    const string_map_t& query);
+  void SetHeaders(curl_slist* list, const string_vec_t& headers);
+  void SetCookies(const std::string& cookies);
   void PerformRequest();
   Response CreateResponse(std::string content);
 };

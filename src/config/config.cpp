@@ -43,6 +43,8 @@ Config CreateConfigFromCliArgs(int argc, char** argv) {
       "threads,t", po::value<short>(), "set number of threads (default: 10)")(
       "wordlist,w", po::value<std::string>(), "set path to the wordlist file")(
       "header,H", po::value<std::vector<std::string>>(), "set a header")(
+      "cookies,c", po::value<std::string>(),
+      "set cookies (in \"NAME1=VAL1; NAME2=VAL2\" format)")(
       "url", po::value<std::string>(), "set target url");
   po::positional_options_description pdesc;
   pdesc.add("url", 1);
@@ -92,6 +94,10 @@ Config CreateConfigFromCliArgs(int argc, char** argv) {
 
   if (vm.count("header") != 0U) {
     config.target_.headers_ = vm["header"].as<std::vector<std::string>>();
+  }
+
+  if (vm.count("cookies") != 0U) {
+    config.target_.cookies_ = vm["cookies"].as<std::string>();
   }
 
   return config;

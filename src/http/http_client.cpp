@@ -19,21 +19,21 @@ size_t WriteCallback(const char* contents, size_t size, size_t nmemb,
 }
 
 Response HttpClient::Get(const Target& target, const string_map_t& query) {
-  return Get(target.Url(), query, target.Headers());
+  return Get(target.Url(), query, target.Headers(), target.Cookies());
 }
 
 Response HttpClient::Get(const std::string& host, const string_map_t& query,
-                         const string_vec_t& headers) {
+                         const string_vec_t& headers,
+                         const std::string& cookies) {
   curl_easy_setopt(curl_, CURLOPT_URL, CreateFullUrl(host, query).c_str());
   curl_easy_setopt(curl_, CURLOPT_WRITEFUNCTION, WriteCallback);
   std::string content{};
   curl_easy_setopt(curl_, CURLOPT_WRITEDATA, &content);
 
   curl_slist* list{nullptr};
-  for (const auto& header : headers) {
-    list = curl_slist_append(list, header.c_str());
-  }
-  curl_easy_setopt(curl_, CURLOPT_HTTPHEADER, list);
+  SetHeaders(list, headers);
+
+  SetCookies(cookies);
 
   PerformRequest();
 
@@ -60,6 +60,17 @@ std::string HttpClient::CreateFullUrl(const std::string& host,
   curl_free(buffer);
 
   return result;
+}
+
+void HttpClient::SetHeaders(curl_slist* list, const string_vec_t& headers) {
+  for (const auto& header : headers) {
+    list = curl_slist_append(list, header.c_str());
+  }
+  curl_easy_setopt(curl_, CURLOPT_HTTPHEADER, list);
+}
+
+void HttpClient::SetCookies(const std::string& cookies) {
+  curl_easy_setopt(curl_, CURLOPT_COOKIE, cookies.c_str());
 }
 
 void HttpClient::PerformRequest() {

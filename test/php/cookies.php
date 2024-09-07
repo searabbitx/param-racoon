@@ -1,7 +1,6 @@
 <?php
 
 // Simple endpoint that expects headers.
-
 if (!isset($_COOKIE['PHPSESSID'])) {
   echo "No cookie!";
   die();
