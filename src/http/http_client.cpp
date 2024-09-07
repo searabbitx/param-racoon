@@ -18,15 +18,17 @@ size_t WriteCallback(const char* contents, size_t size, size_t nmemb,
   return size * nmemb;
 }
 
-Response HttpClient::Get(const std::string& host, const string_map_t& query) {
+Response HttpClient::Get(const std::string& host, const string_map_t& query,
+                         const string_vec_t& headers) {
   curl_easy_setopt(curl_, CURLOPT_URL, CreateFullUrl(host, query).c_str());
   curl_easy_setopt(curl_, CURLOPT_WRITEFUNCTION, WriteCallback);
   std::string content{};
   curl_easy_setopt(curl_, CURLOPT_WRITEDATA, &content);
 
   curl_slist* list{nullptr};
-  list = curl_slist_append(list, "X-Required-Header: foo");
-  list = curl_slist_append(list, "X-Other-Required-Header: foo");
+  for (const auto& header : headers) {
+    list = curl_slist_append(list, header.c_str());
+  }
   curl_easy_setopt(curl_, CURLOPT_HTTPHEADER, list);
 
   PerformRequest();

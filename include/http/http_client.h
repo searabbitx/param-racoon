@@ -4,10 +4,12 @@
 
 #include <map>
 #include <string>
+#include <vector>
 
 #include "http/response.h"
 
 using string_map_t = std::map<std::string, std::string>;
+using string_vec_t = std::vector<std::string>;
 
 class HttpClient {
  private:
@@ -19,7 +21,8 @@ class HttpClient {
   HttpClient& operator=(const HttpClient& other) = delete;
   ~HttpClient();
   Response Get(const std::string& host,
-               const string_map_t& query = string_map_t());
+               const string_map_t& query = string_map_t(),
+               const string_vec_t& headers = string_vec_t());
 
  private:
   static std::string CreateFullUrl(const std::string& host,

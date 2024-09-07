@@ -6,9 +6,13 @@
 #include <filesystem>
 #include <iostream>
 
+#include "config/target.h"
+
 namespace po = boost::program_options;
 
-std::string Config::Url() const { return url_; }
+Config::Config(Target target) : target_{std::move(target)} {}
+
+Target Config::ATarget() const { return target_; }
 
 std::string Config::WordlistPath() const { return wordlist_path_; }
 
@@ -59,11 +63,11 @@ Config CreateConfigFromCliArgs(int argc, char** argv) {
     std::exit(0);
   }
 
-  Config config{};
+  Config config{Target()};
 
   if (vm.count("url") != 0U) {
-    config.url_ = vm["url"].as<std::string>();
-    if (!IsUrlValid(config.url_)) {
+    config.target_.url_ = vm["url"].as<std::string>();
+    if (!IsUrlValid(config.target_.url_)) {
       Err("invalid url", odesc);
     }
   } else {
