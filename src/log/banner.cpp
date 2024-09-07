@@ -7,8 +7,18 @@ constexpr short kColLen{10};
 const auto kEmptyCol{std::string(kColLen + 4, ' ')};
 
 static void PrintHead() {
-  std::cout << "🦝 Hello.\n";
-  std::cout << "🦝🦝🦝🦝\n";
+  // https://patorjk.com/software/taag/#p=testall&h=3&f=Fraktur&t=param%20racoon
+  // Font Name: Script
+  std::cout
+      << "\n"
+         "    _  __,   ,_   __,   _  _  _      ,_   __,  __  __  __  _  _   \n"
+         "  |/ \\/  |  /  | /  |  / |/ |/ |    /  | /  | /   /  \\/  \\/ |/ |  "
+         "\n"
+         "  |__/\\_/|_/   |_\\_/|_/  |  |  |_/     |_\\_/|_\\___\\__/\\__/  |  "
+         "|_/\n"
+         " /|                                                               \n"
+         " \\|                                                               "
+         "\n\n";
 }
 
 static std::string CreatePadding(std::size_t name_length) {
