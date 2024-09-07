@@ -20,17 +20,10 @@ size_t WriteCallback(const char *contents, size_t size, size_t nmemb,
 }
 
 Response HttpClient::Get(const std::string &host, const string_map &query) {
-  CURLcode res;
-
   curl_easy_setopt(curl_, CURLOPT_URL, CreateFullUrl(host, query).c_str());
   curl_easy_setopt(curl_, CURLOPT_WRITEFUNCTION, WriteCallback);
 
-  res = curl_easy_perform(curl_);
-
-  if (res != CURLE_OK) {
-    std::cerr << "curl_easy_perform() failed: " << curl_easy_strerror(res)
-              << '\n';
-  }
+  PerformRequest();
 
   return CreateResponse();
 }
@@ -54,6 +47,14 @@ std::string HttpClient::CreateFullUrl(const std::string &host,
   curl_free(buffer);
 
   return result;
+}
+
+void HttpClient::PerformRequest() {
+  auto res{curl_easy_perform(curl_)};
+  if (res != CURLE_OK) {
+    std::cerr << "curl_easy_perform() failed: " << curl_easy_strerror(res)
+              << '\n';
+  }
 }
 
 Response HttpClient::CreateResponse() {
