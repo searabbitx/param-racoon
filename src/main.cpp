@@ -27,6 +27,9 @@ int main(int argc, char* argv[]) {
   if (!config.ATarget().Cookies().empty()) {
     std::cout << "🦝 cookies: " << config.ATarget().Cookies() << '\n';
   }
+  if (!config.Match().empty()) {
+    std::cout << "🦝 match: " << config.Match() << '\n';
+  }
   std::cout << '\n';
 
   ParamFindingTask task{config, wordlist};
