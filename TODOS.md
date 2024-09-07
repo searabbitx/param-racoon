@@ -13,8 +13,8 @@
 - [x] refactor main function (extract config display logic)
 - [ ] make some better banner and overall output presentation
 - [ ] cache requests made only to obtain response length and reuse those lengths later
-- [ ] match / filter response codes
+- [x] match / filter response codes
 - [ ] use string_views instead of const string ref
 - [x] add support for response len range (+- 5 etc)
-- [ ] check response codes before response len
+- [x] check response codes before response len
 - [ ] specify user-agent
