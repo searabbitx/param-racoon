@@ -13,6 +13,7 @@ Allowed options:
   -t [ --threads ] arg  set number of threads (default: 10)
   -w [ --wordlist ] arg set path to the wordlist file
   -H [ --header ] arg   set a header
+  -a [ --agent ] arg    set user agent
   -c [ --cookies ] arg  set cookies (in "NAME1=VAL1; NAME2=VAL2" format)
   -X [ --method ] arg   set request method (default: GET)
   -d [ --data ] arg     set data to be sent in request body
@@ -32,6 +33,7 @@ Basic usage (testing params based on a set of default heuristics):
 param-racoon \
     -t 5 \
     -w 'wordlist/params.txt' \
+    -a 'Racoonium/5.0 (X11; Racoonix x86_64)'
     -H 'X-Auth-Token: foo' \
     -H 'X-Requested-With: XMLHttpRequest' \
     -c 'PHPSESSID=dc12e575ca; LANG=en' \
