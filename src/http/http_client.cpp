@@ -19,10 +19,14 @@ size_t WriteCallback(const char* contents, size_t size, size_t nmemb,
 }
 
 Response HttpClient::MakeRequest(const Target& target,
-                                 const string_map_t& query,
-                                 const string_map_t& body_params) {
-  return MakeRequest(target.Url(), query, body_params, target.Headers(),
-                     target.Cookies(), target.Method());
+                                 const string_map_t& params) {
+  if (target.Method() == "GET") {
+    return MakeRequest(target.Url(), params, {{}}, target.Headers(),
+                       target.Cookies(), target.Method());
+  } else {
+    return MakeRequest(target.Url(), {{}}, params, target.Headers(),
+                       target.Cookies(), target.Method());
+  }
 }
 
 static std::string CreateBodyString(const string_map_t& body_params) {

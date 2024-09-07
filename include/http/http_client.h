@@ -22,8 +22,7 @@ class HttpClient {
   HttpClient& operator=(const HttpClient& other) = delete;
   ~HttpClient();
   Response MakeRequest(const Target& target,
-                       const string_map_t& query = string_map_t(),
-                       const string_map_t& body_params = string_map_t());
+                       const string_map_t& params = string_map_t());
 
  private:
   Response MakeRequest(const std::string& host,

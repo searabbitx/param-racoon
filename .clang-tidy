@@ -12,7 +12,8 @@ Checks: >
   readability-*,
   -modernize-use-trailing-return-type,
   -google-runtime-int,
-  -google-runtime-references
+  -google-runtime-references,
+  -readability-else-after-return
 
 # Turn all the warnings from the checks above into errors.
 WarningsAsErrors: "*"
