@@ -4,6 +4,8 @@
 
 #include <string>
 
+#include "http/response.h"
+
 class HttpClient {
  private:
   CURL* curl_;
@@ -11,5 +13,5 @@ class HttpClient {
  public:
   HttpClient();
   ~HttpClient();
-  long Get(const std::string& url);
+  Response Get(const std::string& url);
 };

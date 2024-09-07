@@ -5,11 +5,13 @@
 #include <iostream>
 #include <string>
 
+#include "http/response.h"
+
 HttpClient::HttpClient() : curl_(curl_easy_init()) {}
 
 HttpClient::~HttpClient() { curl_easy_cleanup(curl_); }
 
-long HttpClient::Get(const std::string& url) {
+Response HttpClient::Get(const std::string& url) {
   CURLcode res;
 
   curl_easy_setopt(curl_, CURLOPT_URL, url.c_str());
@@ -25,5 +27,5 @@ long HttpClient::Get(const std::string& url) {
   long response_code{0};
   curl_easy_getinfo(curl_, CURLINFO_RESPONSE_CODE, &response_code);
 
-  return response_code;
+  return Response(response_code);
 }
