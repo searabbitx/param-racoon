@@ -52,8 +52,9 @@ std::string HttpClient::CreateFullUrl(const std::string& host,
 void HttpClient::PerformRequest() {
   auto res{curl_easy_perform(curl_)};
   if (res != CURLE_OK) {
-    std::cerr << "curl_easy_perform() failed: " << curl_easy_strerror(res)
+    std::cerr << "Error:\n  Connection failed. " << curl_easy_strerror(res)
               << '\n';
+    std::exit(1);
   }
 }
 
