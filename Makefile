@@ -2,10 +2,12 @@ TARGET_EXEC := param-racoon
 
 BUILD_DIR := ./build
 SRC_DIRS := ./src
+INC_DIR = include
 
 # Find all the C and C++ files we want to compile
 # Note the single quotes around the * expressions. Make will incorrectly expand these otherwise.
 SRCS := $(shell find $(SRC_DIRS) -name '*.cpp' -or -name '*.c' -or -name '*.s')
+INCS := $(shell find $(INC_DIR) -name '*.h')
 
 # String substitution for every C/C++ file.
 #    (substitution made with Substitution References)
@@ -14,7 +16,6 @@ SRCS := $(shell find $(SRC_DIRS) -name '*.cpp' -or -name '*.c' -or -name '*.s')
 OBJS := $(SRCS:%=$(BUILD_DIR)/%.o)
 
 
-INC_DIR = include
 CFLAGS=-c -Wall -Werror -I$(INC_DIR)
 CXXFLAGS=-Wall -Werror -I$(INC_DIR)
 
@@ -59,8 +60,8 @@ clean:
 
 .PHONY: format
 format:
-	clang-format $(CLANGFORMATARGS) -i $(SRCS)
+	clang-format $(CLANGFORMATARGS) -i $(SRCS) $(INCS)
 
 .PHONY: check-format
 check-format:
-	clang-format $(CLANGFORMATARGS) --dry-run $(SRCS)
+	clang-format $(CLANGFORMATARGS) --dry-run $(SRCS) $(INCS)
