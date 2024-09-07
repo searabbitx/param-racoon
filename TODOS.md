@@ -3,7 +3,7 @@
 - [x] paralellize tests
 - [ ] refactor all this config mess
 - [x] handle reflected params
-- [ ] add progress bar
+- [x] add progress bar
 - [x] support POST, PUT, DELETE
 - [ ] support reading requests from txt file
 - [x] support passing headers
