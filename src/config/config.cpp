@@ -35,6 +35,18 @@ static bool IsUrlValid(const std::string& url) {
   return uc == CURLUcode::CURLUE_OK;
 }
 
+static Target::Method MethodFromString(const std::string& value,
+                                       const po::options_description& odesc) {
+  if (value == "GET") {
+    return Target::Method::kGet;
+  }
+  if (value == "POST") {
+    return Target::Method::kPost;
+  }
+  Err("Method " + value + " is not supported.", odesc);
+  std::exit(1);
+}
+
 Config CreateConfigFromCliArgs(int argc, char** argv) {
   const std::string usage_head{
       "Usage:\n"
@@ -49,7 +61,8 @@ Config CreateConfigFromCliArgs(int argc, char** argv) {
       "header,H", po::value<std::vector<std::string>>(), "set a header")(
       "cookies,c", po::value<std::string>(),
       "set cookies (in \"NAME1=VAL1; NAME2=VAL2\" format)")(
-      "method,X", po::value<std::string>(), "set request method")(
+      "method,X", po::value<std::string>(),
+      "set request method (default: GET)")(
       "match,m", po::value<std::string>(),
       "match a string in response to recognize valid params")(
       "filter,f", po::value<std::string>(),
@@ -121,9 +134,10 @@ Config CreateConfigFromCliArgs(int argc, char** argv) {
   }
 
   if (vm.count("method") != 0U) {
-    if ("POST" != vm["method"].as<std::string>()) {
-      Err("Only POST verb is supported by now", odesc);
-    }
+    config.target_.method_ =
+        MethodFromString(vm["method"].as<std::string>(), odesc);
+  } else {
+    config.target_.method_ = Target::Method::kGet;
   }
 
   return config;
