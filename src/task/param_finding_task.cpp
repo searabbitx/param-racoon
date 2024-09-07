@@ -14,13 +14,18 @@ std::vector<std::string> ParamFindingTask::Run() {
 
   std::vector<std::string> results{};
   while (wordlist_.HasMore()) {
-    const std::string param{wordlist_.NextWord()};
-    const string_map_t query{{param, "testvalue"}};
-    if (http_client_.Get(url_, query).DownloadedBytes() !=
-        probe.DownloadedBytes()) {
+    auto param{wordlist_.NextWord()};
+    if (testParam(param, probe)) {
       results.push_back(param);
     }
   }
 
   return results;
+}
+
+bool ParamFindingTask::testParam(const std::string& param,
+                                 const Response& probe) {
+  const string_map_t query{{param, "testvalue"}};
+  auto res{http_client_.Get(url_, query)};
+  return res.DownloadedBytes() != probe.DownloadedBytes();
 }

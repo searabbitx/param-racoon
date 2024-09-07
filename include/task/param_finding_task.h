@@ -16,4 +16,7 @@ class ParamFindingTask {
   ParamFindingTask(const std::string& url, Wordlist& wordlist,
                    HttpClient& http_client);
   std::vector<std::string> Run();
+
+ private:
+  bool testParam(const std::string& param, const Response& probe);
 };
