@@ -63,5 +63,5 @@ void logging::PrintBanner(const Config& config, const Wordlist& wordlist) {
   PrintBannerTableEntry("match", config.Match());
   PrintBannerTableEntry("filter", config.Filter());
 
-  std::cout << '\n';
+  std::cout << "\n\n";
 }

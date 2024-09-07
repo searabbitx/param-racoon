@@ -19,8 +19,9 @@ int main(int argc, char* argv[]) {
 
   auto params{task.Run()};
 
+  std::cout << "\n\n🦝 Found " << params.size() << " params:\n";
   for (const auto& param : params) {
-    std::cout << "🦝🦝 Found param: " << param << '\n';
+    std::cout << "  " << param << '\n';
   }
 
   curl_global_cleanup();

@@ -6,6 +6,8 @@
 namespace logging {
 
 const std::string kEraseLine{"\33[2K\r"};
+const std::string kMoveUp{"\x1b[A"};
+const std::string kMoveDown{"\x1b[B"};
 
 Progress::Progress(long total) : total_{total} {}
 
@@ -25,8 +27,13 @@ void Progress::Advance() {
   PrintProgress();
   if (current_ >= total_) {
     done_ = true;
-    std::cout << '\n' << std::flush;
+    std::cout << kEraseLine << "Done!\n" << std::flush;
   }
+}
+
+void Progress::LogParam(std::string_view param) {
+  std::cout << kMoveUp << "\n🦝🦝 Found param: " << param << '\n'
+            << kEraseLine << kMoveDown << std::flush;
 }
 
 void Progress::PrintProgress() const {

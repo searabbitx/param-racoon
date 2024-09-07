@@ -51,8 +51,10 @@ handler_t ParamFindingTask::CreateParamTestFunction(
     const std::string& param, logging::Progress& progress) {
   return [=, &progress]() {
     auto found{ParamTest(config_, param, probe_, results_).Run()};
-    (void)found;
     std::lock_guard<std::mutex> guard{progress_mtx};
+    if (found) {
+      progress.LogParam(param);
+    }
     progress.Advance();
     if (progress.IsDone()) {
       io_.stop();

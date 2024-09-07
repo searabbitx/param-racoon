@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 namespace logging {
 
 class Progress {
@@ -13,6 +15,7 @@ class Progress {
   void Start();
   void Advance();
   [[nodiscard]] bool IsDone() const;
+  void LogParam(std::string_view param);
 
  private:
   void PrintProgress() const;
