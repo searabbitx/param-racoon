@@ -18,7 +18,7 @@ const std::string kParamValueCanary{"pqrstuvwyz321"};
 
 static bool AreParametersReflected(HttpClient& client, const Target& target) {
   string_map_t params{{kParamNameCanary, kParamValueCanary}};
-  auto res{client.Get(target, params)};
+  auto res{client.MakeRequest(target, params)};
   auto content{res.Content()};
   return sv::npos != content.find(kParamNameCanary) &&
          sv::npos != content.find(kParamValueCanary);
@@ -27,7 +27,7 @@ static bool AreParametersReflected(HttpClient& client, const Target& target) {
 Probe CreateProbe(const Target& target) {
   auto client{HttpClient()};
   auto probe{Probe()};
-  probe.original_response_len_ = client.Get(target).DownloadedBytes();
+  probe.original_response_len_ = client.MakeRequest(target).DownloadedBytes();
   probe.are_parameters_reflected_ = AreParametersReflected(client, target);
   return probe;
 }

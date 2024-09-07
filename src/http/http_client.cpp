@@ -18,13 +18,15 @@ size_t WriteCallback(const char* contents, size_t size, size_t nmemb,
   return size * nmemb;
 }
 
-Response HttpClient::Get(const Target& target, const string_map_t& query) {
-  return Get(target.Url(), query, target.Headers(), target.Cookies());
+Response HttpClient::MakeRequest(const Target& target,
+                                 const string_map_t& query) {
+  return MakeRequest(target.Url(), query, target.Headers(), target.Cookies());
 }
 
-Response HttpClient::Get(const std::string& host, const string_map_t& query,
-                         const string_vec_t& headers,
-                         const std::string& cookies) {
+Response HttpClient::MakeRequest(const std::string& host,
+                                 const string_map_t& query,
+                                 const string_vec_t& headers,
+                                 const std::string& cookies) {
   curl_easy_setopt(curl_, CURLOPT_URL, CreateFullUrl(host, query).c_str());
   curl_easy_setopt(curl_, CURLOPT_WRITEFUNCTION, WriteCallback);
   std::string content{};
