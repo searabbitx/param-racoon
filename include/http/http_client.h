@@ -35,6 +35,7 @@ class HttpClient {
   static std::string CreateFullUrl(const std::string& host,
                                    const std::string& absolute_uri,
                                    const string_map_t& query);
+  static void SetAbsoluteUri(CURLU* url, const std::string& absolute_uri);
   void SetHeaders(curl_slist* list, const string_vec_t& headers);
   void SetCookies(const std::string& cookies);
   void PerformRequest();

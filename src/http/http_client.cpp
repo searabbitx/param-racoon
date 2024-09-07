@@ -92,17 +92,7 @@ std::string HttpClient::CreateFullUrl(const std::string& host,
   CURLU* url{curl_url()};
   curl_url_set(url, CURLUPART_URL, host.c_str(), 0);
 
-  if (!absolute_uri.empty()) {
-    auto query_delim{absolute_uri.find('?')};
-    if (query_delim != std::string::npos) {
-      auto path{absolute_uri.substr(0, query_delim)};
-      auto query{absolute_uri.substr(query_delim + 1)};
-      curl_url_set(url, CURLUPART_PATH, path.c_str(), 0);
-      curl_url_set(url, CURLUPART_QUERY, query.c_str(), 0);
-    } else {
-      curl_url_set(url, CURLUPART_PATH, absolute_uri.c_str(), 0);
-    }
-  }
+  SetAbsoluteUri(url, absolute_uri);
 
   std::string query_entry;
   for (const auto& [key, value] : query) {
@@ -118,6 +108,22 @@ std::string HttpClient::CreateFullUrl(const std::string& host,
   curl_free(buffer);
 
   return result;
+}
+
+void HttpClient::SetAbsoluteUri(CURLU* url, const std::string& absolute_uri) {
+  if (absolute_uri.empty()) {
+    return;
+  }
+
+  auto query_delim{absolute_uri.find('?')};
+  if (query_delim != std::string::npos) {
+    auto path{absolute_uri.substr(0, query_delim)};
+    auto query{absolute_uri.substr(query_delim + 1)};
+    curl_url_set(url, CURLUPART_PATH, path.c_str(), 0);
+    curl_url_set(url, CURLUPART_QUERY, query.c_str(), 0);
+  } else {
+    curl_url_set(url, CURLUPART_PATH, absolute_uri.c_str(), 0);
+  }
 }
 
 void HttpClient::SetHeaders(curl_slist* list, const string_vec_t& headers) {
