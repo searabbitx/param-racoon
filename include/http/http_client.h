@@ -16,7 +16,8 @@ class HttpClient {
  public:
   HttpClient();
   ~HttpClient();
-  Response Get(const std::string& host, const string_map_t& query);
+  Response Get(const std::string& host,
+               const string_map_t& query = string_map_t());
 
  private:
   static std::string CreateFullUrl(const std::string& host,

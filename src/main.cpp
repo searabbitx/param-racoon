@@ -11,14 +11,18 @@
 int main() {
   curl_global_init(CURL_GLOBAL_ALL);
 
-  std::cout << "🦝 Hello." << std::endl;
+  std::cout << "🦝 Hello.\n\n";
 
   Wordlist wordlist{"test/wordlist/test.txt"};
   HttpClient client{};
   const std::string url{"http://localhost:8888/test_params.php"};
   ParamFindingTask task{url, wordlist, client};
 
-  task.Run();
+  auto params{task.Run()};
+
+  for (const auto& param : params) {
+    std::cout << "🦝🦝 Found param: " << param << '\n';
+  }
 
   curl_global_cleanup();
 }

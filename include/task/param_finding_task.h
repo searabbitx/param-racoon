@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <vector>
 
 #include "http/http_client.h"
 #include "wordlist/wordlist.h"
@@ -14,5 +15,5 @@ class ParamFindingTask {
  public:
   ParamFindingTask(const std::string& url, Wordlist& wordlist,
                    HttpClient& http_client);
-  void Run();
+  std::vector<std::string> Run();
 };
