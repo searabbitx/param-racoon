@@ -42,6 +42,8 @@ run-tests: $(BUILD_DIR)/$(TARGET_EXEC)
 	./$(BUILD_DIR)/$(TARGET_EXEC) -w test/wordlist/test.txt 'http://localhost:8888/reflecting.php'
 	@echo "\n---------- Running headers.php test ----------\n"
 	./$(BUILD_DIR)/$(TARGET_EXEC) -w test/wordlist/test.txt -H 'X-Required-Header: someval' -H 'X-Other-Required-Header: otherval' 'http://localhost:8888/headers.php'
+	@echo "\n---------- Running cookies.php test ----------\n"
+	./$(BUILD_DIR)/$(TARGET_EXEC) -w test/wordlist/test.txt -c 'PHPSESSID=dc12e575ca; LANG=en' 'http://localhost:8888/cookies.php'
 
 # Run
 .PHONY: run
