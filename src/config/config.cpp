@@ -68,6 +68,11 @@ void Validate(const Config& config, const po::options_description& odesc) {
             "') does not exist.",
         odesc);
   }
+  if (!std::filesystem::is_regular_file(config.wordlist_path_) &&
+      !std::filesystem::is_symlink(config.wordlist_path_)) {
+    Err("specified wordlist ('" + config.wordlist_path_ + "') is not a file.",
+        odesc);
+  }
   if (!config.match_.empty() && !config.filter_.empty()) {
     Err("match and filter options are mutually exlusive!", odesc);
   }
@@ -133,6 +138,8 @@ Config CreateConfigFromCliArgs(int argc, char** argv) {
   SetValue<std::string>(config.match_, "match", vm);
   SetValue<std::string>(config.filter_, "filter", vm);
   SetValue<std::string>(config.target_.method_, "method", vm, "GET");
+
+  Validate(config, odesc);
 
   return config;
 }
