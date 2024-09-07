@@ -13,3 +13,4 @@
 - [ ] refactor main function (extract config display logic)
 - [ ] cache requests made only to obtain response length and reuse those lengths later
 - [ ] make some better banner and overall output presentation
+- [ ] match / filter response codes
