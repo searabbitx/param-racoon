@@ -18,6 +18,7 @@ OBJS := $(SRCS:%=$(BUILD_DIR)/%.o)
 
 CFLAGS=-c -Wall -Werror -I$(INC_DIR)
 CXXFLAGS=-Wall -Werror -std=c++17 -I$(INC_DIR)
+LDFLAGS=-lcurl
 
 CLANGFORMATARGS=--style=google
 
