@@ -11,7 +11,13 @@ std::string Config::WordlistPath() const { return wordlist_path_; }
 
 short Config::Threads() const { return threads_; }
 
-Config CreateConfigFromCliArgs(int argc, char **argv) {
+static void Err(const std::string& error,
+                const po::options_description& odesc) {
+  std::cout << "Error:\n  " << error << "\n\n" << odesc << '\n';
+  std::exit(1);
+}
+
+Config CreateConfigFromCliArgs(int argc, char** argv) {
   const std::string usage_head{
       "Usage:\n"
       "  param-racoon [options] url\n"
@@ -44,15 +50,13 @@ Config CreateConfigFromCliArgs(int argc, char **argv) {
   if (vm.count("url") != 0U) {
     config.url_ = vm["url"].as<std::string>();
   } else {
-    std::cout << "Error:\n  url is missing\n\n" << odesc << '\n';
-    std::exit(1);
+    Err("url is missing", odesc);
   }
 
   if (vm.count("wordlist") != 0U) {
     config.wordlist_path_ = vm["wordlist"].as<std::string>();
   } else {
-    std::cout << "Error:\n  wordlist is missing\n\n" << odesc << '\n';
-    std::exit(1);
+    Err("wordlist is missing", odesc);
   }
 
   if (vm.count("threads") != 0U) {
