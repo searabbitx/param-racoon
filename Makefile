@@ -17,7 +17,7 @@ OBJS := $(SRCS:%=$(BUILD_DIR)/%.o)
 
 
 CFLAGS=-c -Wall -Werror -I$(INC_DIR)
-CXXFLAGS=-Wall -Werror -I$(INC_DIR)
+CXXFLAGS=-Wall -Werror -std=c++17 -I$(INC_DIR)
 
 CLANGFORMATARGS=--style=google
 
@@ -65,3 +65,13 @@ format:
 .PHONY: check-format
 check-format:
 	clang-format $(CLANGFORMATARGS) --dry-run $(SRCS) $(INCS)
+
+# clang-tidy targets
+
+.PHONY: tidy
+tidy:
+	clang-tidy $(SRCS) -- $(CXXFLAGS)
+
+.PHONY: tidy-fix
+tidy-fix:
+	clang-tidy -fix $(SRCS) -- $(CXXFLAGS)

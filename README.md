@@ -29,3 +29,19 @@ To fix formatting:
 ```bash
 make format
 ```
+
+To run clang-tidy checks:
+
+```
+make tidy
+```
+
+To fix them:
+
+```
+make tidy-fix
+```
+
+# requirements
+
+You will need `clang-tidy` and `clang-format` to run checks.
