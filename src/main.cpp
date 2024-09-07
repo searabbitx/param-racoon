@@ -14,11 +14,11 @@ int main(int argc, char* argv[]) {
   std::cout << "🦝 Hello.\n";
   std::cout << "🦝🦝🦝🦝\n";
   std::cout << "🦝 url: " << config.Url() << '\n';
+  std::cout << "🦝 wordlist: " << config.WordlistPath() << "\n\n";
   std::cout << "🦝 threads: " << config.Threads() << "\n\n";
 
-  const std::string url{config.Url()};
-  Wordlist wordlist{"test/wordlist/test.txt"};
-  ParamFindingTask task{url, wordlist, config.Threads()};
+  Wordlist wordlist{config.WordlistPath()};
+  ParamFindingTask task{config.Url(), wordlist, config.Threads()};
 
   const auto params{task.Run()};
 

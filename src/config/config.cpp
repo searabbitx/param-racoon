@@ -7,6 +7,8 @@ namespace po = boost::program_options;
 
 std::string Config::Url() const { return url_; }
 
+std::string Config::WordlistPath() const { return wordlist_path_; }
+
 short Config::Threads() const { return threads_; }
 
 Config CreateConfigFromCliArgs(int argc, char **argv) {
@@ -19,6 +21,7 @@ Config CreateConfigFromCliArgs(int argc, char **argv) {
 
   odesc.add_options()("help,h", "produce help message")(
       "threads,t", po::value<short>(), "set number of threads (default: 10)")(
+      "wordlist,w", po::value<std::string>(), "set path to the wordlist file")(
       "url", po::value<std::string>(), "set target url");
   po::positional_options_description pdesc;
   pdesc.add("url", 1);
@@ -42,6 +45,13 @@ Config CreateConfigFromCliArgs(int argc, char **argv) {
     config.url_ = vm["url"].as<std::string>();
   } else {
     std::cout << "Error:\n  url is missing\n\n" << odesc << '\n';
+    std::exit(1);
+  }
+
+  if (vm.count("wordlist") != 0U) {
+    config.wordlist_path_ = vm["wordlist"].as<std::string>();
+  } else {
+    std::cout << "Error:\n  wordlist is missing\n\n" << odesc << '\n';
     std::exit(1);
   }
 

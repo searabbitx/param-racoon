@@ -12,7 +12,7 @@ using handler_t = std::function<void()>;
 
 class ParamFindingTask {
  private:
-  const std::string& url_;
+  const std::string url_;
   Wordlist& wordlist_;
   short threads_;
   Response probe_;
