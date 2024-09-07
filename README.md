@@ -15,6 +15,8 @@ Allowed options:
   -H [ --header ] arg   set a header
   -c [ --cookies ] arg  set cookies (in "NAME1=VAL1; NAME2=VAL2" format)
   -m [ --match ] arg    match a string in response to recognize valid params
+  -f [ --filter ] arg   filter out responses with a string to recognize valid 
+                        params
   --url arg             set target url
 ```
 
@@ -37,6 +39,14 @@ Looking for a specific string in response to recognize valid params:
 ```bash
 param-racoon -w 'wordlist/params.txt' -m 'Success!' 'http://example.com/some/endpoint'
 ```
+
+Looking for a specific string in response to filter out invalid params:
+
+```bash
+param-racoon -w 'wordlist/params.txt' -f 'Error!' 'http://example.com/some/endpoint'
+```
+
+**Note**: If you use `-m FOO` or `-f FOO` switch, the only test that will be performed is checking if `FOO` is present/absent in the response for each param.
 
 # building
 
