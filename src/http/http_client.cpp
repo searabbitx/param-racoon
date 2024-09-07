@@ -22,10 +22,12 @@ Response HttpClient::MakeRequest(const Target& target,
                                  const string_map_t& params) {
   if (target.Method() == "GET") {
     return MakeRequest(target.Url(), params, {{}}, target.Headers(),
-                       target.Cookies(), target.Method(), target.Data());
+                       target.Agent(), target.Cookies(), target.Method(),
+                       target.Data());
   } else {
     return MakeRequest(target.Url(), {{}}, params, target.Headers(),
-                       target.Cookies(), target.Method(), target.Data());
+                       target.Agent(), target.Cookies(), target.Method(),
+                       target.Data());
   }
 }
 
@@ -49,18 +51,16 @@ static std::string CreateBodyString(const std::string& data,
   return result;
 }
 
-Response HttpClient::MakeRequest(const std::string& host,
-                                 const string_map_t& query,
-                                 const string_map_t& body_params,
-                                 const string_vec_t& headers,
-                                 const std::string& cookies,
-                                 const std::string& method,
-                                 const std::string& data) {
+Response HttpClient::MakeRequest(
+    const std::string& host, const string_map_t& query,
+    const string_map_t& body_params, const string_vec_t& headers,
+    const std::string& agent, const std::string& cookies,
+    const std::string& method, const std::string& data) {
   curl_easy_setopt(curl_, CURLOPT_CUSTOMREQUEST, method.c_str());
   curl_easy_setopt(curl_, CURLOPT_URL, CreateFullUrl(host, query).c_str());
-  curl_easy_setopt(curl_, CURLOPT_URL, CreateFullUrl(host, query).c_str());
-  curl_easy_setopt(curl_, CURLOPT_WRITEFUNCTION, WriteCallback);
+  curl_easy_setopt(curl_, CURLOPT_USERAGENT, agent.c_str());
 
+  curl_easy_setopt(curl_, CURLOPT_WRITEFUNCTION, WriteCallback);
   std::string content{};
   curl_easy_setopt(curl_, CURLOPT_WRITEDATA, &content);
 

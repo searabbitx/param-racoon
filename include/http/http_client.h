@@ -29,6 +29,7 @@ class HttpClient {
                        const string_map_t& query = string_map_t(),
                        const string_map_t& body_params = string_map_t(),
                        const string_vec_t& headers = string_vec_t(),
+                       const std::string& agent = "",
                        const std::string& cookies = "",
                        const std::string& method = "GET",
                        const std::string& data = "");

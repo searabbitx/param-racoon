@@ -85,6 +85,7 @@ Config CreateConfigFromCliArgs(int argc, char** argv) {
       "threads,t", po::value<short>(), "set number of threads (default: 10)")(
       "wordlist,w", po::value<std::string>(), "set path to the wordlist file")(
       "header,H", po::value<std::vector<std::string>>(), "set a header")(
+      "agent,a", po::value<std::string>(), "set user agent")(
       "cookies,c", po::value<std::string>(),
       "set cookies (in \"NAME1=VAL1; NAME2=VAL2\" format)")(
       "method,X", po::value<std::string>(),
@@ -126,6 +127,7 @@ Config CreateConfigFromCliArgs(int argc, char** argv) {
   SetValue<short>(config.threads_, "threads", vm);
   SetValue<short>(config.min_diff_, "min-diff", vm);
   SetValue<std::vector<std::string>>(config.target_.headers_, "header", vm);
+  SetValue<std::string>(config.target_.agent_, "agent", vm);
   SetValue<std::string>(config.target_.cookies_, "cookies", vm);
   SetValue<std::string>(config.target_.data_, "data", vm);
   SetValue<std::string>(config.match_, "match", vm);

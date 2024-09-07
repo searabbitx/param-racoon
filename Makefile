@@ -56,6 +56,8 @@ run-tests: $(BUILD_DIR)/$(TARGET_EXEC)
 	./$(BUILD_DIR)/$(TARGET_EXEC) -w test/wordlist/test.txt -D 5 'http://localhost:8888/random_len.php'
 	@echo "\n---------- Running response_codes.php test ----------\n"
 	./$(BUILD_DIR)/$(TARGET_EXEC) -w test/wordlist/test.txt 'http://localhost:8888/response_codes.php'
+	@echo "\n---------- Running agent.php test ----------\n"
+	./$(BUILD_DIR)/$(TARGET_EXEC) -w test/wordlist/test.txt -a 'TestAgent' 'http://localhost:8888/agent.php'
 
 # Run
 .PHONY: run
