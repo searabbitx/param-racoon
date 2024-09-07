@@ -59,7 +59,10 @@ param-racoon -w 'wordlist/params.txt' -f 'Error!' 'http://example.com/some/endpo
 
 🦝 Making a POST request (note: params passed with `-d` will not be altered and will be sent with each request):
 ```
-param-racoon -w 'wordlist/params.txt' -X POST -d 'name=foo&id=100' 'http://example.com/some/endpoint'
+param-racoon -w 'wordlist/params.txt' \
+    -X POST \
+    -d 'name=foo&id=100' \
+    'http://example.com/some/endpoint'
 ```
 
 🦝 Ignoring variance in responses less than 5 bytes:
