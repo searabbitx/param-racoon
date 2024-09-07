@@ -27,5 +27,8 @@ Response HttpClient::Get(const std::string& url) {
   long response_code{0};
   curl_easy_getinfo(curl_, CURLINFO_RESPONSE_CODE, &response_code);
 
-  return Response(response_code);
+  curl_off_t downloaded_bytes{0};
+  res = curl_easy_getinfo(curl_, CURLINFO_SIZE_DOWNLOAD_T, &downloaded_bytes);
+
+  return Response(response_code, static_cast<long>(downloaded_bytes));
 }

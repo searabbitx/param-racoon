@@ -3,8 +3,10 @@
 class Response {
  private:
   const long code_;
+  const long downloaded_bytes_;
 
  public:
-  explicit Response(long code);
+  Response(long code, long downloaded_bytes);
   [[nodiscard]] long Code() const;
+  [[nodiscard]] long DownloadedBytes() const;
 };

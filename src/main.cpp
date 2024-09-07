@@ -12,4 +12,5 @@ int main() {
   HttpClient client{};
   const Response response{client.Get("https://www.google.com/")};
   std::cout << "Response code: " << response.Code() << std::endl;
+  std::cout << "Response length: " << response.DownloadedBytes() << std::endl;
 }
