@@ -6,6 +6,7 @@
 #include <filesystem>
 #include <iostream>
 
+#include "config/parserequest.h"
 #include "config/target.h"
 
 Config::Config(Target target) : target_{std::move(target)} {}
@@ -114,6 +115,8 @@ Config CreateConfigFromCliArgs(int argc, char** argv) {
       "response 'different' (default: 1)")(
       "proxy,p", po::value<std::string>(),
       "use the specified proxy (format: [protocol://]host[:port])")(
+      "request,r", po::value<std::string>(),
+      "read a raw http request from the specified file")(
       "quiet,q", "do not print the banner and configuration table")(
       "url", po::value<std::string>(), "set target url");
   po::positional_options_description pdesc;
@@ -137,6 +140,11 @@ Config CreateConfigFromCliArgs(int argc, char** argv) {
   }
 
   Config config{Target()};
+
+  if (vm.count("request") != 0U) {
+    auto req_path{vm["request"].as<std::string>()};
+    ParseRequest(req_path, config);
+  }
 
   SetRequiredValue(config.target_.url_, "url", vm, odesc);
   SetRequiredValue(config.wordlist_path_, "wordlist", vm, odesc);

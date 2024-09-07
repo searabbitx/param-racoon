@@ -32,6 +32,7 @@ class Config {
   friend Config CreateConfigFromCliArgs(int argc, char **argv);
   friend void Validate(const Config &config,
                        const po::options_description &odesc);
+  friend void ParseRequest(std::string_view request_file, Config &config);
 };
 
 Config CreateConfigFromCliArgs(int argc, char **argv);
