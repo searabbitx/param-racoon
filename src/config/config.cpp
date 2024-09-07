@@ -49,6 +49,7 @@ Config CreateConfigFromCliArgs(int argc, char** argv) {
       "header,H", po::value<std::vector<std::string>>(), "set a header")(
       "cookies,c", po::value<std::string>(),
       "set cookies (in \"NAME1=VAL1; NAME2=VAL2\" format)")(
+      "method,X", po::value<std::string>(), "set request method")(
       "match,m", po::value<std::string>(),
       "match a string in response to recognize valid params")(
       "filter,f", po::value<std::string>(),
@@ -117,6 +118,12 @@ Config CreateConfigFromCliArgs(int argc, char** argv) {
       Err("match and filter options are mutually exlusive!", odesc);
     }
     config.filter_ = vm["filter"].as<std::string>();
+  }
+
+  if (vm.count("method") != 0U) {
+    if ("POST" != vm["method"].as<std::string>()) {
+      Err("Only POST verb is supported by now", odesc);
+    }
   }
 
   return config;
