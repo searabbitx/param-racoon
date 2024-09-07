@@ -7,4 +7,5 @@
 - [ ] support POST, PUT, DELETE
 - [ ] support reading requests from txt file
 - [x] support passing headers
-- [ ] support passing cookies
+- [x] support passing cookies
+- [ ] add a switch to recognize valid parameters based on presence / lack of presence of some string/regex in the response
