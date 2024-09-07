@@ -54,6 +54,8 @@ run-tests: $(BUILD_DIR)/$(TARGET_EXEC)
 	./$(BUILD_DIR)/$(TARGET_EXEC) -w test/wordlist/test.txt -X POST -d 'required=foo&otherrequired=bar' 'http://localhost:8888/post_with_required_params.php'
 	@echo "\n---------- Running random_len.php test ----------\n"
 	./$(BUILD_DIR)/$(TARGET_EXEC) -w test/wordlist/test.txt -D 5 'http://localhost:8888/random_len.php'
+	@echo "\n---------- Running response_codes.php test ----------\n"
+	./$(BUILD_DIR)/$(TARGET_EXEC) -w test/wordlist/test.txt 'http://localhost:8888/response_codes.php'
 
 # Run
 .PHONY: run
