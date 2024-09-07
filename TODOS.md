@@ -4,7 +4,7 @@
 - [ ] refactor all this config mess
 - [x] handle reflected params
 - [ ] add progress bar
-- [ ] support POST, PUT, DELETE
+- [x] support POST, PUT, DELETE
 - [ ] support reading requests from txt file
 - [x] support passing headers
 - [x] support passing cookies
