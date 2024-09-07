@@ -23,12 +23,12 @@ class HttpClient {
   ~HttpClient();
   Response MakeRequest(const Target& target,
                        const string_map_t& query = string_map_t(),
-                       const string_map_t& bodyParams = string_map_t());
+                       const string_map_t& body_params = string_map_t());
 
  private:
   Response MakeRequest(const std::string& host,
                        const string_map_t& query = string_map_t(),
-                       const string_map_t& bodyParams = string_map_t(),
+                       const string_map_t& body_params = string_map_t(),
                        const string_vec_t& headers = string_vec_t(),
                        const std::string& cookies = "",
                        const std::string& method = "GET");

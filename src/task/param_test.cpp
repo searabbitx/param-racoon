@@ -42,18 +42,17 @@ static bool matches(std::string_view str, std::string_view match) {
 }
 
 bool ParamTest::CheckForMatchString() {
-  auto res{client_.MakeRequest(config_.ATarget(), CreateQuery(param_))};
+  auto res{MakeRequest(CreateQuery(param_))};
   return matches(res.Content(), config_.Match());
 }
 
 bool ParamTest::CheckForFilterString() {
-  auto res{client_.MakeRequest(config_.ATarget(), CreateQuery(param_))};
+  auto res{MakeRequest(CreateQuery(param_))};
   return !matches(res.Content(), config_.Filter());
 }
 
 bool ParamTest::CompareWithProbeResponseLen() {
-  const string_map_t query{{param_, "testvalue"}};
-  auto res{client_.MakeRequest(config_.ATarget(), query)};
+  auto res{MakeRequest(CreateQuery(param_))};
   return res.DownloadedBytes() != probe_.OriginalResponseLen();
 }
 
@@ -63,9 +62,15 @@ std::string ParamTest::CreateMalformedParamOfTheSameLen() {
 
 bool ParamTest::CheckForReflectedParams() {
   auto target{config_.ATarget()};
-  auto param_response{client_.MakeRequest(target, CreateQuery(param_))};
-  auto malformed_param_response{client_.MakeRequest(
-      target, CreateQuery(CreateMalformedParamOfTheSameLen()))};
+  auto param_response{MakeRequest(CreateQuery(param_))};
+  auto malformed_param_response{
+      MakeRequest(CreateQuery(CreateMalformedParamOfTheSameLen()))};
   return param_response.DownloadedBytes() !=
          malformed_param_response.DownloadedBytes();
+}
+
+Response ParamTest::MakeRequest(const string_map_t& query) {
+  return config_.ATarget().Method() == "GET"
+             ? client_.MakeRequest(config_.ATarget(), query)
+             : client_.MakeRequest(config_.ATarget(), {{}}, query);
 }

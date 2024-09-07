@@ -20,22 +20,45 @@ size_t WriteCallback(const char* contents, size_t size, size_t nmemb,
 
 Response HttpClient::MakeRequest(const Target& target,
                                  const string_map_t& query,
-                                 const string_map_t& bodyParams) {
-  return MakeRequest(target.Url(), query, bodyParams, target.Headers(),
-                     target.Cookies());
+                                 const string_map_t& body_params) {
+  return MakeRequest(target.Url(), query, body_params, target.Headers(),
+                     target.Cookies(), target.Method());
+}
+
+static std::string CreateBodyString(const string_map_t& body_params) {
+  std::string result{};
+  if (body_params.empty()) {
+    return result;
+  }
+  for (const auto& [key, value] : body_params) {
+    result += key;
+    result += '=';
+    result += value;
+    result += '&';
+  }
+  result.pop_back();
+  return result;
 }
 
 Response HttpClient::MakeRequest(const std::string& host,
                                  const string_map_t& query,
-                                 const string_map_t& bodyParams,
+                                 const string_map_t& body_params,
                                  const string_vec_t& headers,
                                  const std::string& cookies,
                                  const std::string& method) {
   curl_easy_setopt(curl_, CURLOPT_CUSTOMREQUEST, method.c_str());
   curl_easy_setopt(curl_, CURLOPT_URL, CreateFullUrl(host, query).c_str());
+  curl_easy_setopt(curl_, CURLOPT_URL, CreateFullUrl(host, query).c_str());
   curl_easy_setopt(curl_, CURLOPT_WRITEFUNCTION, WriteCallback);
+
   std::string content{};
   curl_easy_setopt(curl_, CURLOPT_WRITEDATA, &content);
+
+  std::string body{CreateBodyString(body_params)};
+  if (!body.empty()) {
+    curl_easy_setopt(curl_, CURLOPT_POSTFIELDSIZE, body.length());
+    curl_easy_setopt(curl_, CURLOPT_POSTFIELDS, body.c_str());
+  }
 
   curl_slist* list{nullptr};
   SetHeaders(list, headers);
