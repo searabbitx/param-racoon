@@ -22,13 +22,16 @@ class HttpClient {
   HttpClient& operator=(const HttpClient& other) = delete;
   ~HttpClient();
   Response MakeRequest(const Target& target,
-                       const string_map_t& query = string_map_t());
+                       const string_map_t& query = string_map_t(),
+                       const string_map_t& bodyParams = string_map_t());
 
  private:
   Response MakeRequest(const std::string& host,
                        const string_map_t& query = string_map_t(),
+                       const string_map_t& bodyParams = string_map_t(),
                        const string_vec_t& headers = string_vec_t(),
-                       const std::string& cookies = "");
+                       const std::string& cookies = "",
+                       const std::string& method = "GET");
   static std::string CreateFullUrl(const std::string& host,
                                    const string_map_t& query);
   void SetHeaders(curl_slist* list, const string_vec_t& headers);
