@@ -28,9 +28,9 @@ Allowed options:
   --url arg             set target url
 ```
 
-### Examples:
+### Examples
 
-Basic usage (testing params based on a set of default heuristics):
+🦝 Basic usage (testing params based on a set of default heuristics):
 
 ```bash
 param-racoon \
@@ -43,31 +43,31 @@ param-racoon \
     'http://example.com/some/endpoint'
 ```
 
-Looking for a specific string in the response to recognize valid params:
+🦝 Looking for a specific string in the response to recognize valid params:
 
 ```bash
 param-racoon -w 'wordlist/params.txt' -m 'Success!' 'http://example.com/some/endpoint'
 ```
 
-Looking for a specific string in the response to filter out invalid params:
+🦝 Looking for a specific string in the response to filter out invalid params:
 
 ```bash
 param-racoon -w 'wordlist/params.txt' -f 'Error!' 'http://example.com/some/endpoint'
 ```
 
-Making a POST request (note: params passed with `-d` will not be altered and will be sent with each request):
+🦝 Making a POST request (note: params passed with `-d` will not be altered and will be sent with each request):
 ```
 param-racoon -w 'wordlist/params.txt' -X POST -d 'name=foo&id=100' 'http://example.com/some/endpoint'
 ```
 
 **Note**: If you use `-m FOO` or `-f FOO` switch, the only test that will be performed is checking if `FOO` is present/absent in the response for each param.
 
-Ignoring variance in responses less than 5 bytes:
+🦝 Ignoring variance in responses less than 5 bytes:
 ```
 param-racoon -w 'wordlist/params.txt' --min-diff 5 'http://example.com/some/endpoint'
 ```
 
-Reading a raw http request from a file:
+🦝 Reading a raw http request from a file:
 ```
 param-racoon -w 'wordlist/params.txt' -r get_request.txt 'http://example.com/'
 ```
