@@ -27,8 +27,7 @@ class ParamFindingTask {
 
  private:
   void CreateThreads(boost::thread_group& threads);
-  void PostTests(long& pending_tasks, logging::Progress& progress);
+  void PostTests(logging::Progress& progress);
   handler_t CreateParamTestFunction(const std::string& param,
-                                    long& pending_tasks,
                                     logging::Progress& progress);
 };

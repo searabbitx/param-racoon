@@ -12,6 +12,7 @@ class Progress {
   explicit Progress(long total);
   void Start();
   void Advance();
+  [[nodiscard]] bool IsDone() const;
 
  private:
   void PrintProgress() const;

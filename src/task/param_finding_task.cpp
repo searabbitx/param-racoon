@@ -12,7 +12,7 @@
 #include "task/param_test.h"
 #include "task/probe.h"
 
-std::mutex pending_tasks_mtx;
+std::mutex progress_mtx;
 
 ParamFindingTask::ParamFindingTask(const Config& config, Wordlist& wordlist)
     : config_{config},
@@ -23,14 +23,12 @@ ParamFindingTask::ParamFindingTask(const Config& config, Wordlist& wordlist)
 
 std::vector<std::string> ParamFindingTask::Run() {
   results_ = std::vector<std::string>();
-  auto pending_tasks{wordlist_.Total()};
-  auto progress{logging::Progress(pending_tasks)};
-  progress.Start();
-
   boost::thread_group threads;
   CreateThreads(threads);
 
-  PostTests(pending_tasks, progress);
+  auto progress{logging::Progress(wordlist_.Total())};
+  progress.Start();
+  PostTests(progress);
 
   threads.join_all();
   return results_;
@@ -42,24 +40,21 @@ void ParamFindingTask::CreateThreads(boost::thread_group& threads) {
   }
 }
 
-void ParamFindingTask::PostTests(long& pending_tasks,
-                                 logging::Progress& progress) {
+void ParamFindingTask::PostTests(logging::Progress& progress) {
   while (wordlist_.HasMore()) {
     auto param{wordlist_.NextWord()};
-    io_.post(CreateParamTestFunction(param, pending_tasks, progress));
+    io_.post(CreateParamTestFunction(param, progress));
   }
 }
 
 handler_t ParamFindingTask::CreateParamTestFunction(
-    const std::string& param, long& pending_tasks,
-    logging::Progress& progress) {
-  return [=, &pending_tasks, &progress]() {
+    const std::string& param, logging::Progress& progress) {
+  return [=, &progress]() {
     ParamTest(config_, param, probe_, results_).Run();
 
-    std::lock_guard<std::mutex> guard{pending_tasks_mtx};
-    --pending_tasks;
+    std::lock_guard<std::mutex> guard{progress_mtx};
     progress.Advance();
-    if (pending_tasks == 0) {
+    if (progress.IsDone()) {
       io_.stop();
     }
   };

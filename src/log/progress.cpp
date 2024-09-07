@@ -14,6 +14,8 @@ void Progress::Start() {
   PrintProgress();
 }
 
+bool Progress::IsDone() const { return done_; }
+
 void Progress::Advance() {
   if (done_) {
     return;
