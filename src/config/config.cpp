@@ -16,6 +16,8 @@ const Target& Config::ATarget() const { return target_; }
 
 std::string Config::WordlistPath() const { return wordlist_path_; }
 
+std::string Config::Match() const { return match_; }
+
 short Config::Threads() const { return threads_; }
 
 static void Err(const std::string& error,
@@ -46,7 +48,7 @@ Config CreateConfigFromCliArgs(int argc, char** argv) {
       "cookies,c", po::value<std::string>(),
       "set cookies (in \"NAME1=VAL1; NAME2=VAL2\" format)")(
       "match,m", po::value<std::string>(),
-      "match a string in resopnse to recognize valid params")(
+      "match a string in response to recognize valid params")(
       "url", po::value<std::string>(), "set target url");
   po::positional_options_description pdesc;
   pdesc.add("url", 1);
@@ -100,6 +102,10 @@ Config CreateConfigFromCliArgs(int argc, char** argv) {
 
   if (vm.count("cookies") != 0U) {
     config.target_.cookies_ = vm["cookies"].as<std::string>();
+  }
+
+  if (vm.count("match") != 0U) {
+    config.match_ = vm["match"].as<std::string>();
   }
 
   return config;

@@ -4,6 +4,8 @@
 
 #include "task/probe.h"
 
+using sv = std::string_view;
+
 std::mutex results_mtx;
 
 ParamTest::ParamTest(const Config& config, const std::string& param,
@@ -23,8 +25,18 @@ static string_map_t CreateQuery(const std::string& param) {
 }
 
 bool ParamTest::CheckParam() {
-  return probe_.AreParametersReflected() ? CheckForReflectedParams()
-                                         : CompareWithProbeResponseLen();
+  if (!config_.Match().empty()) {
+    return CheckForMatchString();
+  }
+  if (probe_.AreParametersReflected()) {
+    return CheckForReflectedParams();
+  }
+  return CompareWithProbeResponseLen();
+}
+
+bool ParamTest::CheckForMatchString() {
+  auto res{client_.Get(config_.ATarget(), CreateQuery(param_))};
+  return sv::npos != res.Content().find(config_.Match());
 }
 
 bool ParamTest::CompareWithProbeResponseLen() {
