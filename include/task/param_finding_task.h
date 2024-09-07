@@ -14,13 +14,14 @@ class ParamFindingTask {
  private:
   const std::string& url_;
   Wordlist& wordlist_;
+  short threads_;
   Response probe_;
   boost::asio::io_service io_;
   boost::asio::io_service::work work_;
   std::vector<std::string> results_{};
 
  public:
-  ParamFindingTask(const std::string& url, Wordlist& wordlist);
+  ParamFindingTask(const std::string& url, Wordlist& wordlist, short threads);
   std::vector<std::string> Run();
 
  private:

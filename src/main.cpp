@@ -6,6 +6,8 @@
 #include "task/param_finding_task.h"
 #include "wordlist/wordlist.h"
 
+constexpr short kThreads{10};
+
 int main() {
   curl_global_init(CURL_GLOBAL_ALL);
 
@@ -13,7 +15,7 @@ int main() {
 
   const std::string url{"http://localhost:8888/test_params.php"};
   Wordlist wordlist{"test/wordlist/test.txt"};
-  ParamFindingTask task{url, wordlist};
+  ParamFindingTask task{url, wordlist, kThreads};
 
   const auto params{task.Run()};
 

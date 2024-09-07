@@ -10,13 +10,13 @@
 #include "http/http_client.h"
 #include "task/param_test.h"
 
-constexpr short kThreadCount{10};
-
 std::mutex pending_tasks_mtx;
 
-ParamFindingTask::ParamFindingTask(const std::string& url, Wordlist& wordlist)
+ParamFindingTask::ParamFindingTask(const std::string& url, Wordlist& wordlist,
+                                   short threads)
     : url_{url},
       wordlist_{wordlist},
+      threads_{threads},
       probe_{HttpClient().Get(url)},
       io_{},
       work_{io_} {}
@@ -35,7 +35,7 @@ std::vector<std::string> ParamFindingTask::Run() {
 }
 
 void ParamFindingTask::CreateThreads(boost::thread_group& threads) {
-  for (short i = 0; i < kThreadCount; ++i) {
+  for (short i = 0; i < threads_; ++i) {
     threads.create_thread([this] { io_.run(); });
   }
 }
