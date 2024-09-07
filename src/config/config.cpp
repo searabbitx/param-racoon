@@ -1,6 +1,7 @@
 #include "config/config.h"
 
 #include <boost/program_options.hpp>
+#include <filesystem>
 #include <iostream>
 
 namespace po = boost::program_options;
@@ -59,6 +60,11 @@ Config CreateConfigFromCliArgs(int argc, char** argv) {
 
   if (vm.count("wordlist") != 0U) {
     config.wordlist_path_ = vm["wordlist"].as<std::string>();
+    if (!std::filesystem::exists(config.wordlist_path_)) {
+      Err("specified wordlist file ('" + config.wordlist_path_ +
+              ")' does not exist.",
+          odesc);
+    }
   } else {
     Err("wordlist is missing", odesc);
   }
