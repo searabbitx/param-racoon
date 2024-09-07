@@ -9,3 +9,4 @@
 - [x] support passing headers
 - [x] support passing cookies
 - [ ] add a switch to recognize valid parameters based on presence / lack of presence of some string/regex in the response
+- [ ] refactor main function (extract config display logic)
