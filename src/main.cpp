@@ -13,8 +13,7 @@ int main() {
 
   const std::string url{"http://localhost:8888/test_params.php"};
   Wordlist wordlist{"test/wordlist/test.txt"};
-  HttpClient client{};
-  ParamFindingTask task{url, wordlist, client};
+  ParamFindingTask task{url, wordlist};
 
   const auto params{task.Run()};
 
