@@ -53,7 +53,7 @@ handler_t ParamFindingTask::CreateParamTestFunction(
     auto found{ParamTest(config_, param, probe_, results_).Run()};
     std::lock_guard<std::mutex> guard{progress_mtx};
     if (found) {
-      progress.LogParam(param);
+      logging::Progress::LogParam(param);
     }
     progress.Advance();
     if (progress.IsDone()) {

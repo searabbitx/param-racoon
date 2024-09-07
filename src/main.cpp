@@ -19,7 +19,7 @@ int main(int argc, char* argv[]) {
 
   auto params{task.Run()};
 
-  std::cout << "\n\n🦝 Found " << params.size() << " params:\n";
+  std::cout << "\n🦝 Found " << params.size() << " params:\n";
   for (const auto& param : params) {
     std::cout << "  " << param << '\n';
   }

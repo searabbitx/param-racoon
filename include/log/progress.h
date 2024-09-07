@@ -12,10 +12,10 @@ class Progress {
 
  public:
   explicit Progress(long total);
+  static void LogParam(std::string_view param);
   void Start();
   void Advance();
   [[nodiscard]] bool IsDone() const;
-  void LogParam(std::string_view param);
 
  private:
   void PrintProgress() const;
