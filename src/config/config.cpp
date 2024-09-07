@@ -33,12 +33,16 @@ Config CreateConfigFromCliArgs(int argc, char** argv) {
   pdesc.add("url", 1);
 
   po::variables_map vm;
-  po::store(po::command_line_parser(argc, argv)
-                .options(odesc)
-                .positional(pdesc)
-                .run(),
-            vm);
-  po::notify(vm);
+  try {
+    po::store(po::command_line_parser(argc, argv)
+                  .options(odesc)
+                  .positional(pdesc)
+                  .run(),
+              vm);
+    po::notify(vm);
+  } catch (std::exception& e) {
+    Err(e.what(), odesc);
+  }
 
   if (vm.count("help") != 0U) {
     std::cout << odesc << "\n";
