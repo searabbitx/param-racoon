@@ -17,8 +17,30 @@ void ParamTest::Run() {
   }
 }
 
+static string_map_t CreateQuery(const std::string& param) {
+  string_map_t query{{param, "testvalue"}};
+  return query;
+}
+
 bool ParamTest::CheckParam() {
+  return probe_.AreParametersReflected() ? CheckForReflectedParams()
+                                         : CompareWithProbeResponseLen();
+}
+
+bool ParamTest::CompareWithProbeResponseLen() {
   const string_map_t query{{param_, "testvalue"}};
   auto res{client_.Get(url_, query)};
   return res.DownloadedBytes() != probe_.OriginalResponseLen();
+}
+
+std::string ParamTest::CreateMalformedParamOfTheSameLen() {
+  return std::string(param_.length(), 'X');
+}
+
+bool ParamTest::CheckForReflectedParams() {
+  auto param_response{client_.Get(url_, CreateQuery(param_))};
+  auto malformed_param_response{
+      client_.Get(url_, CreateQuery(CreateMalformedParamOfTheSameLen()))};
+  return param_response.DownloadedBytes() !=
+         malformed_param_response.DownloadedBytes();
 }

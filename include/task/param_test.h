@@ -21,4 +21,7 @@ class ParamTest {
 
  private:
   bool CheckParam();
+  bool CompareWithProbeResponseLen();
+  bool CheckForReflectedParams();
+  std::string CreateMalformedParamOfTheSameLen();
 };
