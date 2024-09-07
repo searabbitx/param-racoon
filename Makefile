@@ -18,6 +18,8 @@ INC_DIR = include
 CFLAGS=-c -Wall -Werror -I$(INC_DIR)
 CXXFLAGS=-Wall -Werror -I$(INC_DIR)
 
+CLANGFORMATARGS=--style=google
+
 # run `make build DEBUG=true` to build with debug symbols
 ifeq ($(DEBUG),true)
 	override CFLAGS+=-ggdb
@@ -52,3 +54,13 @@ $(BUILD_DIR)/%.cpp.o: %.cpp
 .PHONY: clean
 clean:
 	rm -r $(BUILD_DIR)
+
+# clang-format targets
+
+.PHONY: format
+format:
+	clang-format $(CLANGFORMATARGS) -i $(SRCS)
+
+.PHONY: check-format
+check-format:
+	clang-format $(CLANGFORMATARGS) --dry-run $(SRCS)
