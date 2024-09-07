@@ -28,6 +28,30 @@ static void Err(const std::string& error,
   std::exit(1);
 }
 
+template <typename T>
+void SetValue(T& dest, const std::string& name, po::variables_map& vm) {
+  if (vm.count(name) != 0U) {
+    dest = vm[name].as<T>();
+  }
+}
+
+template <typename T>
+void SetRequiredValue(T& dest, const std::string& name, po::variables_map& vm,
+                      const po::options_description& odesc) {
+  if (vm.count(name) != 0U) {
+    dest = vm[name].as<T>();
+  } else {
+    Err(name + " is missing", odesc);
+  }
+}
+
+template <typename T>
+void SetValue(T& dest, const std::string& name, po::variables_map& vm,
+              T default_val) {
+  dest = default_val;
+  SetValue<T>(dest, name, vm);
+}
+
 static bool IsUrlValid(const std::string& url) {
   CURLU* h{curl_url()};
   CURLUcode uc{curl_url_set(h, CURLUPART_URL, url.c_str(), 0)};
@@ -80,58 +104,30 @@ Config CreateConfigFromCliArgs(int argc, char** argv) {
 
   Config config{Target()};
 
-  if (vm.count("url") != 0U) {
-    config.target_.url_ = vm["url"].as<std::string>();
-    if (!IsUrlValid(config.target_.url_)) {
-      Err("invalid url", odesc);
-    }
-  } else {
-    Err("url is missing", odesc);
+  SetRequiredValue<std::string>(config.target_.url_, "url", vm, odesc);
+  if (!IsUrlValid(config.target_.url_)) {
+    Err("invalid url", odesc);
   }
 
-  if (vm.count("wordlist") != 0U) {
-    config.wordlist_path_ = vm["wordlist"].as<std::string>();
-    if (!std::filesystem::exists(config.wordlist_path_)) {
-      Err("specified wordlist file ('" + config.wordlist_path_ +
-              ")' does not exist.",
-          odesc);
-    }
-  } else {
-    Err("wordlist is missing", odesc);
+  SetRequiredValue<std::string>(config.wordlist_path_, "wordlist", vm, odesc);
+  if (!std::filesystem::exists(config.wordlist_path_)) {
+    Err("specified wordlist file ('" + config.wordlist_path_ +
+            "') does not exist.",
+        odesc);
   }
 
-  if (vm.count("threads") != 0U) {
-    config.threads_ = vm["threads"].as<short>();
+  SetValue<short>(config.threads_, "threads", vm);
+  SetValue<std::vector<std::string>>(config.target_.headers_, "header", vm);
+  SetValue<std::string>(config.target_.cookies_, "cookies", vm);
+  SetValue<std::string>(config.target_.data_, "data", vm);
+
+  SetValue<std::string>(config.match_, "match", vm);
+  SetValue<std::string>(config.filter_, "filter", vm);
+  if (!config.match_.empty() && !config.filter_.empty()) {
+    Err("match and filter options are mutually exlusive!", odesc);
   }
 
-  if (vm.count("header") != 0U) {
-    config.target_.headers_ = vm["header"].as<std::vector<std::string>>();
-  }
-
-  if (vm.count("cookies") != 0U) {
-    config.target_.cookies_ = vm["cookies"].as<std::string>();
-  }
-
-  if (vm.count("match") != 0U) {
-    config.match_ = vm["match"].as<std::string>();
-  }
-
-  if (vm.count("filter") != 0U) {
-    if (!config.match_.empty()) {
-      Err("match and filter options are mutually exlusive!", odesc);
-    }
-    config.filter_ = vm["filter"].as<std::string>();
-  }
-
-  if (vm.count("method") != 0U) {
-    config.target_.method_ = vm["method"].as<std::string>();
-  } else {
-    config.target_.method_ = "GET";
-  }
-
-  if (vm.count("data") != 0U) {
-    config.target_.data_ = vm["data"].as<std::string>();
-  }
+  SetValue<std::string>(config.target_.method_, "method", vm, "GET");
 
   return config;
 }
