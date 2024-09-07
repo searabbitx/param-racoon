@@ -18,3 +18,4 @@
 - [x] add support for response len range (+- 5 etc)
 - [x] check response codes before response len
 - [x] specify user-agent
+- [ ] http proxy!
