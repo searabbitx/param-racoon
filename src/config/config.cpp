@@ -35,18 +35,6 @@ static bool IsUrlValid(const std::string& url) {
   return uc == CURLUcode::CURLUE_OK;
 }
 
-static Target::Method MethodFromString(const std::string& value,
-                                       const po::options_description& odesc) {
-  if (value == "GET") {
-    return Target::Method::kGet;
-  }
-  if (value == "POST") {
-    return Target::Method::kPost;
-  }
-  Err("Method " + value + " is not supported.", odesc);
-  std::exit(1);
-}
-
 Config CreateConfigFromCliArgs(int argc, char** argv) {
   const std::string usage_head{
       "Usage:\n"
@@ -134,10 +122,9 @@ Config CreateConfigFromCliArgs(int argc, char** argv) {
   }
 
   if (vm.count("method") != 0U) {
-    config.target_.method_ =
-        MethodFromString(vm["method"].as<std::string>(), odesc);
+    config.target_.method_ = vm["method"].as<std::string>();
   } else {
-    config.target_.method_ = Target::Method::kGet;
+    config.target_.method_ = "GET";
   }
 
   return config;
