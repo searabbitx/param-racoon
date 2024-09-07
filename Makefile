@@ -50,6 +50,8 @@ run-tests: $(BUILD_DIR)/$(TARGET_EXEC)
 	./$(BUILD_DIR)/$(TARGET_EXEC) -w test/wordlist/test.txt -f 'found a nothing' 'http://localhost:8888/match.php'
 	@echo "\n---------- Running post.php test ----------\n"
 	./$(BUILD_DIR)/$(TARGET_EXEC) -w test/wordlist/test.txt -X POST 'http://localhost:8888/post.php'
+	@echo "\n---------- Running post_with_required_params.php test ----------\n"
+	./$(BUILD_DIR)/$(TARGET_EXEC) -w test/wordlist/test.txt -X POST -d 'required=foo&otherrequired=bar' 'http://localhost:8888/post_with_required_params.php'
 
 # Run
 .PHONY: run
