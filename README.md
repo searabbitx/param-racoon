@@ -13,6 +13,7 @@ Allowed options:
   -t [ --threads ] arg  set number of threads (default: 10)
   -w [ --wordlist ] arg set path to the wordlist file
   -H [ --header ] arg   set a header
+  -c [ --cookies ] arg  set cookies (in "NAME1=VAL1; NAME2=VAL2" format)
   --url arg             set target url
 ```
 
@@ -23,6 +24,7 @@ param-racoon \
     -w 'wordlist/params.txt' \
     -H 'X-Auth-Token: foo' \
     -H 'X-Requested-With: XMLHttpRequest' \
+    -c 'PHPSESSID=dc12e575ca; LANG=en' \
     'http://example.com/some/endpoint'
 ```
 
