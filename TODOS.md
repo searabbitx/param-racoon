@@ -17,4 +17,4 @@
 - [ ] use string_views instead of const string ref
 - [x] add support for response len range (+- 5 etc)
 - [x] check response codes before response len
-- [ ] specify user-agent
+- [x] specify user-agent
