@@ -33,6 +33,14 @@ endif
 build: $(BUILD_DIR)/$(TARGET_EXEC)
 	@echo done
 
+# Run tests
+.PHONY: run-tests
+run-tests: $(BUILD_DIR)/$(TARGET_EXEC)
+	@echo "\n---------- Running basic.php test ----------\n"
+	./$(BUILD_DIR)/$(TARGET_EXEC) -w test/wordlist/test.txt 'http://localhost:8888/basic.php'
+	@echo "\n---------- Running reflecting.php test ----------\n"
+	./$(BUILD_DIR)/$(TARGET_EXEC) -w test/wordlist/test.txt 'http://localhost:8888/reflecting.php'
+
 # Run
 .PHONY: run
 run: $(BUILD_DIR)/$(TARGET_EXEC)

@@ -7,6 +7,7 @@ last3
 last4
 last5
 last6
+another_secret
 last7
 last8
 last9

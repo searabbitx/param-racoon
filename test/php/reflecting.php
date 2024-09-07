@@ -6,7 +6,7 @@ $currentUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" 
 echo "<h1>Hello!</h1>";
 echo "<p><a href=\"$currentUrl\">current url</a></p>";
 usleep(250000);
-if (isset($_GET['secret'])) {
+if (isset($_GET['secret']) || isset($_GET['another_secret'])) {
   echo "You've found a secret!";
 }
 

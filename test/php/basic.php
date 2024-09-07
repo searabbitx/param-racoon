@@ -4,6 +4,6 @@
 
 echo "Hello!";
 usleep(250000);
-if (isset($_GET['secret'])) {
+if (isset($_GET['secret']) || isset($_GET['another_secret'])) {
   echo "You've found a secret!";
 }
