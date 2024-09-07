@@ -10,7 +10,7 @@ int main() {
   std::cout << "Hello." << std::endl;
 
   HttpClient client{};
-  const Response response{client.Get("https://example.com/")};
+  const Response response{client.Get("http://localhost:8888/test_params.php")};
   std::cout << "Response code: " << response.Code() << std::endl;
   std::cout << "Response length: " << response.DownloadedBytes() << std::endl;
 }
