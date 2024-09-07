@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "config/config.h"
+#include "log/progress.h"
 #include "task/probe.h"
 #include "wordlist/wordlist.h"
 
@@ -26,7 +27,8 @@ class ParamFindingTask {
 
  private:
   void CreateThreads(boost::thread_group& threads);
-  void PostTests(long& pending_tasks);
+  void PostTests(long& pending_tasks, logging::Progress& progress);
   handler_t CreateParamTestFunction(const std::string& param,
-                                    long& pending_tasks);
+                                    long& pending_tasks,
+                                    logging::Progress& progress);
 };
