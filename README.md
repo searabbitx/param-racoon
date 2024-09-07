@@ -18,7 +18,12 @@ Allowed options:
 
 Example:
 ```bash
-param-racoon -t 5 -w 'wordlist/params.txt' -H 'X-Auth-Token: foo' -H 'X-Requested-With: XMLHttpRequest' 'http://example.com/some/endpoint'
+param-racoon \
+    -t 5 \
+    -w 'wordlist/params.txt' \
+    -H 'X-Auth-Token: foo' \
+    -H 'X-Requested-With: XMLHttpRequest' \
+    'http://example.com/some/endpoint'
 ```
 
 # building
