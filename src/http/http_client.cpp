@@ -21,11 +21,11 @@ size_t WriteCallback(const char* contents, size_t size, size_t nmemb,
 Response HttpClient::MakeRequest(const Target& target,
                                  const string_map_t& params) {
   if (target.Method() == "GET") {
-    return MakeRequest(target.Url(), params, {{}}, target.Headers(),
+    return MakeRequest(target.Url(), params, {}, target.Headers(),
                        target.Agent(), target.Cookies(), target.Method(),
                        target.Data(), target.Proxy(), target.AbsoluteUri());
   } else {
-    return MakeRequest(target.Url(), {{}}, params, target.Headers(),
+    return MakeRequest(target.Url(), {}, params, target.Headers(),
                        target.Agent(), target.Cookies(), target.Method(),
                        target.Data(), target.Proxy(), target.AbsoluteUri());
   }
