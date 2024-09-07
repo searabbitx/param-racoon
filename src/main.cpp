@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) {
   }
   std::cout << '\n';
 
-  ParamFindingTask task{config.ATarget(), wordlist, config.Threads()};
+  ParamFindingTask task{config, wordlist};
 
   const auto params{task.Run()};
 

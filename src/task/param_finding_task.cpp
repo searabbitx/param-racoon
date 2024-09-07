@@ -9,15 +9,14 @@
 
 #include "task/param_test.h"
 #include "task/probe.h"
+#include "config/config.h"
 
 std::mutex pending_tasks_mtx;
 
-ParamFindingTask::ParamFindingTask(const Target& target, Wordlist& wordlist,
-                                   short threads)
-    : target_{target},
+ParamFindingTask::ParamFindingTask(const Config& config, Wordlist& wordlist)
+    : config_{config},
       wordlist_{wordlist},
-      threads_{threads},
-      probe_{CreateProbe(target)},
+      probe_{CreateProbe(config.ATarget())},
       io_{},
       work_{io_} {}
 
@@ -35,7 +34,7 @@ std::vector<std::string> ParamFindingTask::Run() {
 }
 
 void ParamFindingTask::CreateThreads(boost::thread_group& threads) {
-  for (short i = 0; i < threads_; ++i) {
+  for (short i = 0; i < config_.Threads(); ++i) {
     threads.create_thread([this] { io_.run(); });
   }
 }
@@ -50,7 +49,7 @@ void ParamFindingTask::PostTests(long& pending_tasks) {
 handler_t ParamFindingTask::CreateParamTestFunction(const std::string& param,
                                                     long& pending_tasks) {
   return [=, &pending_tasks]() {
-    ParamTest(target_, param, probe_, results_).Run();
+    ParamTest(config_.ATarget(), param, probe_, results_).Run();
 
     std::lock_guard<std::mutex> guard{pending_tasks_mtx};
     --pending_tasks;
