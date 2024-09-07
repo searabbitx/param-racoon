@@ -45,6 +45,7 @@ Config CreateConfigFromCliArgs(int argc, char** argv) {
       "header,H", po::value<std::vector<std::string>>(), "set a header")(
       "cookies,c", po::value<std::string>(),
       "set cookies (in \"NAME1=VAL1; NAME2=VAL2\" format)")(
+      "match,m", po::value<std::string>(), "match a string in resopnse to recognize valid params")(
       "url", po::value<std::string>(), "set target url");
   po::positional_options_description pdesc;
   pdesc.add("url", 1);
