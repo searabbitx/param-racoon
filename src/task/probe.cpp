@@ -9,6 +9,7 @@
 using sv = std::string_view;
 
 long Probe::OriginalResponseLen() const { return original_response_len_; };
+long Probe::OriginalResponseCode() const { return original_response_code_; };
 bool Probe::AreParametersReflected() const {
   return are_parameters_reflected_;
 };
@@ -27,7 +28,9 @@ static bool AreParametersReflected(HttpClient& client, const Target& target) {
 Probe CreateProbe(const Target& target) {
   auto client{HttpClient()};
   auto probe{Probe()};
-  probe.original_response_len_ = client.MakeRequest(target).DownloadedBytes();
+  auto res{client.MakeRequest(target)};
+  probe.original_response_len_ = res.DownloadedBytes();
+  probe.original_response_code_ = res.Code();
   probe.are_parameters_reflected_ = AreParametersReflected(client, target);
   return probe;
 }

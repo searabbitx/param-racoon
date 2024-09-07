@@ -8,11 +8,13 @@
 class Probe {
  private:
   long original_response_len_;
+  long original_response_code_;
   bool are_parameters_reflected_;
   Probe() = default;
 
  public:
   [[nodiscard]] long OriginalResponseLen() const;
+  [[nodiscard]] long OriginalResponseCode() const;
   [[nodiscard]] bool AreParametersReflected() const;
   friend Probe CreateProbe(const Target& target);
 };

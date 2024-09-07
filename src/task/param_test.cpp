@@ -56,7 +56,8 @@ bool ParamTest::CheckForFilterString() {
 bool ParamTest::CompareWithProbeResponseLen() {
   auto res{MakeRequest(CreateParams(param_))};
   auto diff{std::abs(res.DownloadedBytes() - probe_.OriginalResponseLen())};
-  return diff >= config_.MinDiff();
+  return res.Code() != probe_.OriginalResponseCode() ||
+         diff >= config_.MinDiff();
 }
 
 std::string ParamTest::CreateMalformedParamOfTheSameLen() {
@@ -70,7 +71,8 @@ bool ParamTest::CheckForReflectedParams() {
       MakeRequest(CreateParams(CreateMalformedParamOfTheSameLen()))};
   auto diff{std::abs(param_response.DownloadedBytes() -
                      malformed_param_response.DownloadedBytes())};
-  return diff >= config_.MinDiff();
+  return param_response.Code() != malformed_param_response.Code() ||
+         diff >= config_.MinDiff();
 }
 
 Response ParamTest::MakeRequest(const string_map_t& params) {
