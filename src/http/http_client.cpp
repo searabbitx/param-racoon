@@ -31,11 +31,8 @@ Response HttpClient::MakeRequest(const Target& target,
   }
 }
 
-static std::string CreateBodyString(const std::string& data,
-                                    const string_map_t& additional_params) {
-  if (additional_params.empty()) {
-    return data;
-  }
+static std::string CreateUrlEncodedBodyString(
+    const std::string& data, const string_map_t& additional_params) {
   std::string result{};
   if (!data.empty()) {
     result += data;
@@ -49,6 +46,36 @@ static std::string CreateBodyString(const std::string& data,
   }
   result.pop_back();
   return result;
+}
+
+const std::string kNamePlaceholder{"RACC_PNAME"};
+const std::string kValuePlaceholder{"RACC_PVALUE"};
+
+static std::string CreateMatchReplaceBodyString(
+    const std::string& data, const string_map_t& additional_params) {
+  std::string result{data};
+
+  for (const auto& [key, value] : additional_params) {
+    auto name_pos{result.find(kNamePlaceholder)};
+    result.replace(name_pos, kNamePlaceholder.length(), key);
+
+    auto value_pos{result.find(kValuePlaceholder)};
+    if (value_pos != std::string::npos) {
+      result.replace(value_pos, kValuePlaceholder.length(), value);
+    }
+  }
+
+  return result;
+}
+
+static std::string CreateBodyString(const std::string& data,
+                                    const string_map_t& additional_params) {
+  if (additional_params.empty()) {
+    return data;
+  }
+  return data.find(kNamePlaceholder) != std::string::npos
+             ? CreateMatchReplaceBodyString(data, additional_params)
+             : CreateUrlEncodedBodyString(data, additional_params);
 }
 
 Response HttpClient::MakeRequest(
