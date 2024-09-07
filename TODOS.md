@@ -1,3 +1,9 @@
 - [ ] handle connection failures
 - [x] add some basic method to determine if parameter is correct 
-- [ ] paralellize tests
+- [x] paralellize tests
+- [ ] refactor all this config mess
+- [ ] use heuristics different than response size comparison
+- [ ] add progress bar
+- [ ] support POST, PUT, DELETE
+- [ ] support reading requests from txt file
+- [ ] support passing headers and cookies
