@@ -10,14 +10,14 @@
 
 int main(int argc, char* argv[]) {
   curl_global_init(CURL_GLOBAL_ALL);
-  const Config config{CreateConfigFromCliArgs(argc, argv)};
-  Wordlist wordlist{config.WordlistPath()};
+  auto config{CreateConfigFromCliArgs(argc, argv)};
+  auto wordlist{Wordlist(config.WordlistPath())};
 
   logging::printBanner(config, wordlist);
 
-  ParamFindingTask task{config, wordlist};
+  auto task{ParamFindingTask(config, wordlist)};
 
-  const auto params{task.Run()};
+  auto params{task.Run()};
 
   for (const auto& param : params) {
     std::cout << "🦝🦝 Found param: " << param << '\n';
