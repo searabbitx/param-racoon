@@ -23,11 +23,11 @@ Response HttpClient::MakeRequest(const Target& target,
   if (target.Method() == "GET") {
     return MakeRequest(target.Url(), params, {{}}, target.Headers(),
                        target.Agent(), target.Cookies(), target.Method(),
-                       target.Data());
+                       target.Data(), target.Proxy());
   } else {
     return MakeRequest(target.Url(), {{}}, params, target.Headers(),
                        target.Agent(), target.Cookies(), target.Method(),
-                       target.Data());
+                       target.Data(), target.Proxy());
   }
 }
 
@@ -55,9 +55,13 @@ Response HttpClient::MakeRequest(
     const std::string& host, const string_map_t& query,
     const string_map_t& body_params, const string_vec_t& headers,
     const std::string& agent, const std::string& cookies,
-    const std::string& method, const std::string& data) {
+    const std::string& method, const std::string& data,
+    const std::string& proxy) {
   curl_easy_setopt(curl_, CURLOPT_CUSTOMREQUEST, method.c_str());
   curl_easy_setopt(curl_, CURLOPT_URL, CreateFullUrl(host, query).c_str());
+  if (!proxy.empty()) {
+    curl_easy_setopt(curl_, CURLOPT_PROXY, proxy.c_str());
+  }
   curl_easy_setopt(curl_, CURLOPT_USERAGENT, agent.c_str());
 
   curl_easy_setopt(curl_, CURLOPT_WRITEFUNCTION, WriteCallback);

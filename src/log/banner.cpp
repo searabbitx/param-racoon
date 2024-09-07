@@ -62,6 +62,7 @@ void logging::PrintBanner(const Config& config, const Wordlist& wordlist) {
   PrintBannerTableEntry("cookies", config.ATarget().Cookies());
   PrintBannerTableEntry("match", config.Match());
   PrintBannerTableEntry("filter", config.Filter());
+  PrintBannerTableEntry("proxy", config.ATarget().Proxy());
 
   std::cout << "\n\n";
 }
