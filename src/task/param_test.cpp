@@ -36,7 +36,7 @@ bool ParamTest::CheckParam() {
   if (probe_.AreParametersReflected()) {
     return CheckForReflectedParams();
   }
-  return CompareWithProbeResponseLen();
+  return CompareWithProbe();
 }
 
 static bool matches(std::string_view str, std::string_view match) {
@@ -53,7 +53,7 @@ bool ParamTest::CheckForFilterString() {
   return !matches(res.Content(), config_.Filter());
 }
 
-bool ParamTest::CompareWithProbeResponseLen() {
+bool ParamTest::CompareWithProbe() {
   auto res{MakeRequest(CreateParams(param_))};
   auto diff{std::abs(res.DownloadedBytes() - probe_.OriginalResponseLen())};
   return res.Code() != probe_.OriginalResponseCode() ||

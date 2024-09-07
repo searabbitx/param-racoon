@@ -24,7 +24,7 @@ class ParamTest {
   bool CheckParam();
   bool CheckForMatchString();
   bool CheckForFilterString();
-  bool CompareWithProbeResponseLen();
+  bool CompareWithProbe();
   bool CheckForReflectedParams();
   std::string CreateMalformedParamOfTheSameLen();
   Response MakeRequest(const string_map_t& params);
