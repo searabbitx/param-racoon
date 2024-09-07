@@ -3,19 +3,22 @@
 #include <iostream>
 #include <string>
 
+#include "config/config.h"
 #include "task/param_finding_task.h"
 #include "wordlist/wordlist.h"
 
-constexpr short kThreads{10};
-
-int main() {
+int main(int argc, char* argv[]) {
   curl_global_init(CURL_GLOBAL_ALL);
+  const Config config{CreateConfigFromCliArgs(argc, argv)};
 
-  std::cout << "🦝 Hello.\n\n";
+  std::cout << "🦝 Hello.\n";
+  std::cout << "🦝🦝🦝🦝\n";
+  std::cout << "🦝 url: " << config.Url() << '\n';
+  std::cout << "🦝 threads: " << config.Threads() << "\n\n";
 
-  const std::string url{"http://localhost:8888/test_params.php"};
+  const std::string url{config.Url()};
   Wordlist wordlist{"test/wordlist/test.txt"};
-  ParamFindingTask task{url, wordlist, kThreads};
+  ParamFindingTask task{url, wordlist, config.Threads()};
 
   const auto params{task.Run()};
 
