@@ -2,7 +2,7 @@
 - [x] add some basic method to determine if parameter is correct 
 - [x] paralellize tests
 - [ ] refactor all this config mess
-- [x] hondle reflected params
+- [x] handle reflected params
 - [ ] add progress bar
 - [ ] support POST, PUT, DELETE
 - [ ] support reading requests from txt file
@@ -12,3 +12,4 @@
 - [x] add a switch to recognize valid parameters based on lack of presence of some string in the response
 - [ ] refactor main function (extract config display logic)
 - [ ] cache requests made only to obtain response length and reuse those lengths later
+- [ ] make some better banner and overall output presentation
