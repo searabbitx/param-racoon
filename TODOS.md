@@ -6,5 +6,5 @@
 - [ ] add progress bar
 - [ ] support POST, PUT, DELETE
 - [ ] support reading requests from txt file
-- [ ] support passing headers
+- [x] support passing headers
 - [ ] support passing cookies
