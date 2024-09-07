@@ -16,3 +16,4 @@
 - [ ] match / filter response codes
 - [ ] use string_views instead of const string ref
 - [ ] add support for response len range (+- 5 etc)
+- [ ] check response codes before response len

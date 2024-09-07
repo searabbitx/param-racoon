@@ -93,7 +93,10 @@ Config CreateConfigFromCliArgs(int argc, char** argv) {
       "match a string in response to recognize valid params")(
       "filter,f", po::value<std::string>(),
       "filter out responses with a string to recognize valid params")(
-      "url", po::value<std::string>(), "set target url");
+      "min-diff,D", po::value<short>(),
+      "minimal difference in response length that is required to consider "
+      "response 'different' (default: 1)")("url", po::value<std::string>(),
+                                           "set target url");
   po::positional_options_description pdesc;
   pdesc.add("url", 1);
 
