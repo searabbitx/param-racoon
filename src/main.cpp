@@ -13,7 +13,9 @@ int main(int argc, char* argv[]) {
   auto config{CreateConfigFromCliArgs(argc, argv)};
   auto wordlist{Wordlist(config.WordlistPath())};
 
-  logging::PrintBanner(config, wordlist);
+  if (!config.Quiet()) {
+    logging::PrintBanner(config, wordlist);
+  }
 
   auto task{ParamFindingTask(config, wordlist)};
 

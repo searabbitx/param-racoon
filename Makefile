@@ -37,27 +37,27 @@ build: $(BUILD_DIR)/$(TARGET_EXEC)
 .PHONY: run-tests
 run-tests: $(BUILD_DIR)/$(TARGET_EXEC)
 	@echo "\n---------- Running basic.php test ----------\n"
-	./$(BUILD_DIR)/$(TARGET_EXEC) -w test/wordlist/test.txt 'http://localhost:8888/basic.php'
+	./$(BUILD_DIR)/$(TARGET_EXEC) -q -w test/wordlist/test.txt 'http://localhost:8888/basic.php'
 	@echo "\n---------- Running reflecting.php test ----------\n"
-	./$(BUILD_DIR)/$(TARGET_EXEC) -w test/wordlist/test.txt 'http://localhost:8888/reflecting.php'
+	./$(BUILD_DIR)/$(TARGET_EXEC) -q -w test/wordlist/test.txt 'http://localhost:8888/reflecting.php'
 	@echo "\n---------- Running headers.php test ----------\n"
-	./$(BUILD_DIR)/$(TARGET_EXEC) -w test/wordlist/test.txt -H 'X-Required-Header: someval' -H 'X-Other-Required-Header: otherval' 'http://localhost:8888/headers.php'
+	./$(BUILD_DIR)/$(TARGET_EXEC) -q -w test/wordlist/test.txt -H 'X-Required-Header: someval' -H 'X-Other-Required-Header: otherval' 'http://localhost:8888/headers.php'
 	@echo "\n---------- Running cookies.php test ----------\n"
-	./$(BUILD_DIR)/$(TARGET_EXEC) -w test/wordlist/test.txt -c 'PHPSESSID=dc12e575ca; LANG=en' 'http://localhost:8888/cookies.php'
+	./$(BUILD_DIR)/$(TARGET_EXEC) -q -w test/wordlist/test.txt -c 'PHPSESSID=dc12e575ca; LANG=en' 'http://localhost:8888/cookies.php'
 	@echo "\n---------- Running match.php test ----------\n"
-	./$(BUILD_DIR)/$(TARGET_EXEC) -w test/wordlist/test.txt -m 'found a secret' 'http://localhost:8888/match.php'
+	./$(BUILD_DIR)/$(TARGET_EXEC) -q -w test/wordlist/test.txt -m 'found a secret' 'http://localhost:8888/match.php'
 	@echo "\n---------- Running match.php test with filtering ----------\n"
-	./$(BUILD_DIR)/$(TARGET_EXEC) -w test/wordlist/test.txt -f 'found a nothing' 'http://localhost:8888/match.php'
+	./$(BUILD_DIR)/$(TARGET_EXEC) -q -w test/wordlist/test.txt -f 'found a nothing' 'http://localhost:8888/match.php'
 	@echo "\n---------- Running post.php test ----------\n"
-	./$(BUILD_DIR)/$(TARGET_EXEC) -w test/wordlist/test.txt -X POST 'http://localhost:8888/post.php'
+	./$(BUILD_DIR)/$(TARGET_EXEC) -q -w test/wordlist/test.txt -X POST 'http://localhost:8888/post.php'
 	@echo "\n---------- Running post_with_required_params.php test ----------\n"
-	./$(BUILD_DIR)/$(TARGET_EXEC) -w test/wordlist/test.txt -X POST -d 'required=foo&otherrequired=bar' 'http://localhost:8888/post_with_required_params.php'
+	./$(BUILD_DIR)/$(TARGET_EXEC) -q -w test/wordlist/test.txt -X POST -d 'required=foo&otherrequired=bar' 'http://localhost:8888/post_with_required_params.php'
 	@echo "\n---------- Running random_len.php test ----------\n"
-	./$(BUILD_DIR)/$(TARGET_EXEC) -w test/wordlist/test.txt -D 6 'http://localhost:8888/random_len.php'
+	./$(BUILD_DIR)/$(TARGET_EXEC) -q -w test/wordlist/test.txt -D 6 'http://localhost:8888/random_len.php'
 	@echo "\n---------- Running response_codes.php test ----------\n"
-	./$(BUILD_DIR)/$(TARGET_EXEC) -w test/wordlist/test.txt 'http://localhost:8888/response_codes.php'
+	./$(BUILD_DIR)/$(TARGET_EXEC) -q -w test/wordlist/test.txt 'http://localhost:8888/response_codes.php'
 	@echo "\n---------- Running agent.php test ----------\n"
-	./$(BUILD_DIR)/$(TARGET_EXEC) -w test/wordlist/test.txt -a 'TestAgent' 'http://localhost:8888/agent.php'
+	./$(BUILD_DIR)/$(TARGET_EXEC) -q -w test/wordlist/test.txt -a 'TestAgent' 'http://localhost:8888/agent.php'
 
 # Run
 .PHONY: run

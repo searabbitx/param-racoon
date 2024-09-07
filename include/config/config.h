@@ -18,6 +18,7 @@ class Config {
   std::string filter_{};
   short threads_{kDefaultThreads};
   short min_diff_{kDefaultDiff};
+  bool quiet_{false};
   explicit Config(Target target);
 
  public:
@@ -27,6 +28,7 @@ class Config {
   [[nodiscard]] std::string Filter() const;
   [[nodiscard]] short Threads() const;
   [[nodiscard]] short MinDiff() const;
+  [[nodiscard]] bool Quiet() const;
   friend Config CreateConfigFromCliArgs(int argc, char **argv);
   friend void Validate(const Config &config,
                        const po::options_description &odesc);

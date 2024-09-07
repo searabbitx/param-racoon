@@ -22,6 +22,8 @@ short Config::Threads() const { return threads_; }
 
 short Config::MinDiff() const { return min_diff_; }
 
+bool Config::Quiet() const { return quiet_; }
+
 static void Err(const std::string& error,
                 const po::options_description& odesc) {
   std::cout << "Error:\n  " << error << "\n\n" << odesc << '\n';
@@ -32,6 +34,12 @@ template <typename T>
 void SetValue(T& dest, const std::string& name, po::variables_map& vm) {
   if (vm.count(name) != 0U) {
     dest = vm[name].as<T>();
+  }
+}
+
+void SetValue(bool& dest, const std::string& name, po::variables_map& vm) {
+  if (vm.count(name) != 0U) {
+    dest = true;
   }
 }
 
@@ -103,8 +111,9 @@ Config CreateConfigFromCliArgs(int argc, char** argv) {
       "filter out responses with a string to recognize valid params")(
       "min-diff,D", po::value<short>(),
       "minimal difference in response length that is required to consider "
-      "response 'different' (default: 1)")("url", po::value<std::string>(),
-                                           "set target url");
+      "response 'different' (default: 1)")(
+      "quiet,q", "do not print the banner and configuration table")(
+      "url", po::value<std::string>(), "set target url");
   po::positional_options_description pdesc;
   pdesc.add("url", 1);
 
@@ -138,6 +147,7 @@ Config CreateConfigFromCliArgs(int argc, char** argv) {
   SetValue<std::string>(config.match_, "match", vm);
   SetValue<std::string>(config.filter_, "filter", vm);
   SetValue<std::string>(config.target_.method_, "method", vm, "GET");
+  SetValue(config.quiet_, "quiet", vm);
 
   Validate(config, odesc);
 
