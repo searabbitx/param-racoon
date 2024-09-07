@@ -18,6 +18,8 @@ std::string Config::WordlistPath() const { return wordlist_path_; }
 
 std::string Config::Match() const { return match_; }
 
+std::string Config::Filter() const { return filter_; }
+
 short Config::Threads() const { return threads_; }
 
 static void Err(const std::string& error,
@@ -108,6 +110,13 @@ Config CreateConfigFromCliArgs(int argc, char** argv) {
 
   if (vm.count("match") != 0U) {
     config.match_ = vm["match"].as<std::string>();
+  }
+
+  if (vm.count("filter") != 0U) {
+    if (!config.match_.empty()) {
+      Err("match and filter options are mutually exlusive!", odesc);
+    }
+    config.filter_ = vm["filter"].as<std::string>();
   }
 
   return config;

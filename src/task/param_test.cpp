@@ -28,15 +28,27 @@ bool ParamTest::CheckParam() {
   if (!config_.Match().empty()) {
     return CheckForMatchString();
   }
+  if (!config_.Filter().empty()) {
+    return CheckForFilterString();
+  }
   if (probe_.AreParametersReflected()) {
     return CheckForReflectedParams();
   }
   return CompareWithProbeResponseLen();
 }
 
+static bool matches(std::string_view str, std::string_view match) {
+  return sv::npos != str.find(match);
+}
+
 bool ParamTest::CheckForMatchString() {
   auto res{client_.Get(config_.ATarget(), CreateQuery(param_))};
-  return sv::npos != res.Content().find(config_.Match());
+  return matches(res.Content(), config_.Match());
+}
+
+bool ParamTest::CheckForFilterString() {
+  auto res{client_.Get(config_.ATarget(), CreateQuery(param_))};
+  return !matches(res.Content(), config_.Filter());
 }
 
 bool ParamTest::CompareWithProbeResponseLen() {

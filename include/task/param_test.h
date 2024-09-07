@@ -23,6 +23,7 @@ class ParamTest {
  private:
   bool CheckParam();
   bool CheckForMatchString();
+  bool CheckForFilterString();
   bool CompareWithProbeResponseLen();
   bool CheckForReflectedParams();
   std::string CreateMalformedParamOfTheSameLen();
