@@ -23,11 +23,11 @@ Response HttpClient::MakeRequest(const Target& target,
   if (target.Method() == "GET") {
     return MakeRequest(target.Url(), params, {{}}, target.Headers(),
                        target.Agent(), target.Cookies(), target.Method(),
-                       target.Data(), target.Proxy());
+                       target.Data(), target.Proxy(), target.AbsoluteUri());
   } else {
     return MakeRequest(target.Url(), {{}}, params, target.Headers(),
                        target.Agent(), target.Cookies(), target.Method(),
-                       target.Data(), target.Proxy());
+                       target.Data(), target.Proxy(), target.AbsoluteUri());
   }
 }
 
@@ -93,7 +93,15 @@ std::string HttpClient::CreateFullUrl(const std::string& host,
   curl_url_set(url, CURLUPART_URL, host.c_str(), 0);
 
   if (!absolute_uri.empty()) {
-    curl_url_set(url, CURLUPART_PATH, absolute_uri.c_str(), 0);
+    auto query_delim{absolute_uri.find('?')};
+    if (query_delim != std::string::npos) {
+      auto path{absolute_uri.substr(0, query_delim)};
+      auto query{absolute_uri.substr(query_delim + 1)};
+      curl_url_set(url, CURLUPART_PATH, path.c_str(), 0);
+      curl_url_set(url, CURLUPART_QUERY, query.c_str(), 0);
+    } else {
+      curl_url_set(url, CURLUPART_PATH, absolute_uri.c_str(), 0);
+    }
   }
 
   std::string query_entry;

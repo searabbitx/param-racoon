@@ -1,4 +1,4 @@
-GET /test.html HTTP/1.1
+GET /test.html?required=someval HTTP/1.1
 User-Agent: Foo
 Host: example.com
 Accept-Language: en-us
